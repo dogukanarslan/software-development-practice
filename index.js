@@ -5,6 +5,8 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
+app.use(express.static('public'));
+
 // View engine
 app.set('view engine', 'ejs');
 
