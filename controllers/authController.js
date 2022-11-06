@@ -6,7 +6,19 @@ const handleErrors = (err) => {
 
   // Duplicate error code
   if (err.code === 11000) {
-    errors.email = 'Email already exists';
+    errors.email = 'Email already exists.';
+
+    return errors;
+  }
+
+  if (err.message === 'Incorrect email.') {
+    errors.email = 'Email is not registered.';
+
+    return errors;
+  }
+
+  if (err.message === 'Incorrect password.') {
+    errors.password = 'Password is incorrect.';
 
     return errors;
   }
@@ -40,7 +52,7 @@ module.exports.signup_post = async (req, res) => {
     const token = createToken(user._id);
 
     res.cookie('authentication', token, { maxAge: maxAge * 1000 });
-    res.status(201).json({user: user._id});
+    res.status(201).json({ user: user._id });
   } catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -51,13 +63,18 @@ module.exports.login_get = (req, res) => {
   res.render('login');
 };
 
-module.exports.login_post = (req, res) => {
+module.exports.login_post = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    res.status(200).json({ email, password });
+    const user = await User.login(email, password);
+
+    const token = createToken(user._id);
+
+    res.cookie('authentication', token, { maxAge: maxAge * 1000 });
+    res.status(200).json({ user: user._id });
   } catch (err) {
-    console.error(err);
-    res.status(400).send('Login failed');
+    const errors = handleErrors(err);
+    res.status(400).json({ errors });
   }
 };
