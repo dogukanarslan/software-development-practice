@@ -12,6 +12,6 @@ Welcome, this is an Express application that you can use to save any resources a
 - Add USER, PASSWORD, and DB information to .env file
 - Run index script by running `nodemon index`
 
-## Screenshots
+### Screenshots
 ![pinner-signup](https://user-images.githubusercontent.com/52973879/200196415-4eb36f9a-94be-438e-9349-d43e6474de65.png)
 ![pinner-login](https://user-images.githubusercontent.com/52973879/200196413-6eeaefe1-f807-4a74-92e6-973a1d033afa.png)
