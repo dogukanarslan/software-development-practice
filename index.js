@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
+const { requireAuth } = require('./middlewares/authMiddleware');
+
 const app = express();
 
 // Middleware
@@ -28,5 +30,8 @@ mongoose
 // Routes
 app.get('/', (req, res) => {
   res.render('home');
+});
+app.get('/pins', requireAuth, (req, res) => {
+  res.render('pins');
 });
 app.use(authRoutes);
