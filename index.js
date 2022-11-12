@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const cookieParser = require('cookie-parser');
-const { requireAuth } = require('./middlewares/authMiddleware');
+const { requireAuth, checkUser } = require('./middlewares/authMiddleware');
 
 const app = express();
 
@@ -28,6 +28,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // Routes
+app.get('*', checkUser)
 app.get('/', (req, res) => {
   res.render('home');
 });

@@ -78,3 +78,9 @@ module.exports.login_post = async (req, res) => {
     res.status(400).json({ errors });
   }
 };
+
+module.exports.logout_get = (req, res) => {
+  // Override authentication cookie with blank one
+  res.cookie('authentication', '', { maxAge: 0 });
+  res.redirect('/')
+};
