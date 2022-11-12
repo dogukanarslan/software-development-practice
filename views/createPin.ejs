@@ -1,0 +1,65 @@
+<%- include('partials/header'); -%>
+
+<form>
+  <h2>Create pin</h2>
+  <label for="title">Title</label>
+  <input type="text" name="title" required />
+  <div class="title error"></div>
+
+  <label for="description">Description</label>
+  <input type="text" name="description" />
+  <div class="description error"></div>
+
+  <label for="link">Link</label>
+  <input type="text" name="link" required />
+  <div class="link error"></div>
+
+  <button>Create pin</button>
+</form>
+
+<script>
+  const form = document.querySelector('form');
+  const titleError = document.querySelector('.title.error');
+  const descriptionError = document.querySelector('.description.error');
+  const linkError = document.querySelector('.link.error');
+
+  form.addEventListener('submit', async (e) => {
+    console.log('submit');
+    e.preventDefault();
+
+    // Reset errors
+    titleError.textContent = '';
+    descriptionError.textContent = '';
+    linkError.textContent = '';
+
+    const title = form.title.value;
+    const description = form.description.value;
+    const link = form.link.value;
+
+    try {
+      const res = await fetch('/pins/create', {
+        method: 'POST',
+        body: JSON.stringify({ title, description, link }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await res.json();
+
+      if (data.errors) {
+        titleError.textContent = data.errors.title;
+        descriptionError.textContent = data.errors.description;
+        linkError.textContent = data.errors.link;
+      }
+
+      if (data.pin) {
+        location.assign('/pins/create');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>
+
+<%- include('partials/footer'); -%>

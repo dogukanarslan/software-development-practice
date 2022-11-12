@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const pinRoutes = require('./routes/pinRoutes');
 const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser } = require('./middlewares/authMiddleware');
 
@@ -32,14 +33,6 @@ app.get('*', checkUser);
 app.get('/', (req, res) => {
   res.render('home');
 });
-app.get('/pins', requireAuth, (req, res) => {
-  res.render('pins', {
-    pins: [
-      { title: 'Document 1', description: 'Lorem ipsum' },
-      { title: 'Document 2', description: 'Lorem ipsum' },
-      { title: 'Document 3', description: 'Lorem ipsum' },
-      { title: 'Document 4', description: 'Lorem ipsum' },
-    ],
-  });
-});
+
 app.use(authRoutes);
+app.use(pinRoutes);
