@@ -41,6 +41,10 @@ nav {
   margin-bottom: 120px;
 }
 
+nav .nav {
+  display: flex;
+}
+
 nav ul {
   display: flex;
   align-items: center;
@@ -157,6 +161,7 @@ footer {
   margin: 80px AUTO;
   max-width: 1200px;
 }
+
 .pin {
   display: inline-block;
   border-radius: 20px;
