@@ -28,11 +28,18 @@ mongoose
   .catch((err) => console.log(err));
 
 // Routes
-app.get('*', checkUser)
+app.get('*', checkUser);
 app.get('/', (req, res) => {
   res.render('home');
 });
 app.get('/pins', requireAuth, (req, res) => {
-  res.render('pins');
+  res.render('pins', {
+    pins: [
+      { title: 'Document 1', description: 'Lorem ipsum' },
+      { title: 'Document 2', description: 'Lorem ipsum' },
+      { title: 'Document 3', description: 'Lorem ipsum' },
+      { title: 'Document 4', description: 'Lorem ipsum' },
+    ],
+  });
 });
 app.use(authRoutes);

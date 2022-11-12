@@ -1,3 +1,10 @@
-<%- include('partials/header'); -%>
-
+<%- include('partials/header'); -%> 
+<ul class="pins">
+  <% pins.forEach(pin => { %>
+  <li class="pin">
+    <h4><%= pin.title %></h4>
+    <p><%= pin.description %></p>
+  </li>
+  <% }) %>
+</ul>
 <%- include('partials/footer'); -%>
