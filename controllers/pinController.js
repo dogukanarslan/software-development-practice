@@ -1,13 +1,10 @@
 const Pin = require('../models/Pin');
 
-module.exports.list_get = (req, res) => {
+module.exports.list_get = async (req, res) => {
+  const pins = await Pin.find();
+
   res.render('listPins', {
-    pins: [
-      { title: 'Document 1', description: 'Lorem ipsum' },
-      { title: 'Document 2', description: 'Lorem ipsum' },
-      { title: 'Document 3', description: 'Lorem ipsum' },
-      { title: 'Document 4', description: 'Lorem ipsum' },
-    ],
+    pins,
   });
 };
 
