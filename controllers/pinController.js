@@ -8,6 +8,12 @@ module.exports.list_get = async (req, res) => {
   });
 };
 
+module.exports.show_get = async (req, res) => {
+  const pin = await Pin.findOne({ _id: req.params.pinId });
+
+  res.render('showPin', { pin });
+};
+
 module.exports.create_get = (req, res) => {
   res.render('createPin');
 };
