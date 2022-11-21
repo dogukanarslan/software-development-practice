@@ -4,7 +4,10 @@
   "description": "* [Wiki Page](https://github.com/dogukanarslan/software-development-practice/wiki)\r * [Current Issues](https://github.com/dogukanarslan/software-development-practice/issues)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "dev": "concurrently \"nodemon .\" \"npm run scss\"",
+    "scss": "sass --watch scss/main.scss public/styles.css"
   },
   "repository": {
     "type": "git",
@@ -18,11 +21,14 @@
   "homepage": "https://github.com/dogukanarslan/software-development-practice#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "bootstrap": "^5.2.2",
+    "concurrently": "^7.6.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.15"
+    "mongoose": "^5.13.15",
+    "sass": "^1.56.1"
   }
 }
