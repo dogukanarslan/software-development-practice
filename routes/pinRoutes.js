@@ -1,8 +1,10 @@
 const { Router } = require('express');
 const pinController = require('../controllers/pinController');
-const requireAuth = require('../middlewares/authMiddleware');
+const { requireAuth } = require('../middlewares/authMiddleware');
 
 const router = Router();
+
+router.use(requireAuth);
 
 router.get('/pins/create', pinController.create_get);
 router.post('/pins/create', pinController.create_post);
