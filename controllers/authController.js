@@ -44,10 +44,10 @@ module.exports.signup_get = (req, res) => {
 };
 
 module.exports.signup_post = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name, surname } = req.body;
 
   try {
-    const user = await User.create({ email, password });
+    const user = await User.create({ email, password, name, surname });
 
     const token = createToken(user._id);
 
@@ -82,5 +82,5 @@ module.exports.login_post = async (req, res) => {
 module.exports.logout_get = (req, res) => {
   // Override authentication cookie with blank one
   res.cookie('authentication', '', { maxAge: 0 });
-  res.redirect('/')
+  res.redirect('/');
 };

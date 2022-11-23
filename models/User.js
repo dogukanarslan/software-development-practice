@@ -13,6 +13,12 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required.'],
     minlength: [6, "Password can't be shorter than 6 characters."],
   },
+  name: {
+    type: String,
+  },
+  surname: {
+    type: String,
+  },
 });
 
 userSchema.pre('save', async function (next) {
