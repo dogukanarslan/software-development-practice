@@ -1,4 +1,9 @@
 <%- include('partials/header'); -%>
-<p><b>Title:</b> <%= pin.title %></p>
-<p><b>Description:</b> <%= pin.description %></p>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><%= pin.title %></h5>
+    <p class="card-text"><%= pin.description %></p>
+    <a href="<%= pin.link %>" class="btn btn-primary">Visit</a>
+  </div>
+</div>
 <%- include('partials/footer'); -%>
