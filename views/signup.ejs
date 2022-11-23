@@ -60,11 +60,13 @@
 
     const email = form.email.value;
     const password = form.password.value;
+    const name = form.name.value;
+    const surname = form.surname.value;
 
     try {
       const res = await fetch('/signup', {
         method: 'POST',
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, name, surname }),
         headers: {
           'Content-Type': 'application/json',
         },
