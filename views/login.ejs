@@ -1,14 +1,18 @@
 <%- include('partials/header'); -%>
 
-<form>
+<form class="w-25 mx-auto">
   <h2>Log in</h2>
-  <label for="email">Email</label>
-  <input type="text" name="email" required />
-  <div class="email error"></div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="text" name="email" class="form-control" required />
+    <div class="email error"></div>
+  </div>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" required />
-  <div class="password error"></div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" name="password" class="form-control" required />
+    <div class="password error"></div>
+  </div>
 
   <button class="btn btn-primary">Log in</button>
 </form>

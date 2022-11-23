@@ -1,14 +1,47 @@
 <%- include('partials/header'); -%>
 
-<form>
+<form class="w-25 mx-auto">
   <h2>Sign up</h2>
-  <label for="email">Email</label>
-  <input type="text" name="email" required />
-  <div class="email error"></div>
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Email</label>
+    <input
+      type="text"
+      name="email"
+      class="form-control"
+      placeholder="john.doe@example.com"
+    />
+    <div class="email error"></div>
+  </div>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" required />
-  <div class="password error"></div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" name="password" class="form-control" required />
+    <div class="password error"></div>
+  </div>
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input
+      type="text"
+      name="name"
+      class="form-control"
+      placeholder="John"
+      required
+    />
+    <div class="name error"></div>
+  </div>
+
+  <div class="mb-3">
+    <label for="surname" class="form-label">Surname</label>
+    <input
+      type="text"
+      name="surname"
+      class="form-control"
+      placeholder="Doe"
+      required
+    />
+    <div class="surname error"></div>
+  </div>
 
   <button class="btn btn-primary">Sign up</button>
 </form>

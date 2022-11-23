@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const pinRoutes = require('./routes/pinRoutes');
 const cookieParser = require('cookie-parser');
-const { requireAuth, checkUser } = require('./middlewares/authMiddleware');
+const { checkUser } = require('./middlewares/authMiddleware');
 
 const app = express();
 
