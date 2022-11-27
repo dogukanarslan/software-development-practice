@@ -19,7 +19,7 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-describe('Fetch pins', () => {
+describe('Create pin', () => {
   const date = Date.now();
 
   test('signup', async () => {
