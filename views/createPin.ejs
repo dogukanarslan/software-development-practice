@@ -31,7 +31,6 @@
   const linkError = document.querySelector('.link.error');
 
   form.addEventListener('submit', async (e) => {
-    console.log('submit');
     e.preventDefault();
 
     // Reset errors
@@ -61,7 +60,7 @@
       }
 
       if (data.pin) {
-        location.assign('/pins');
+        location.assign('/');
       }
     } catch (err) {
       console.log(err);

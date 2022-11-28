@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const Pin = require('./Pin');
 
 const userSchema = new mongoose.Schema({
   email: {

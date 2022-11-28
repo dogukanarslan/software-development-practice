@@ -12,6 +12,12 @@ const pinSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Link is required.'],
   },
+  creator: {
+    type: String
+  },
+  user_id: {
+    type: String,
+  },
 });
 
 const Pin = mongoose.model('pin', pinSchema);
