@@ -1,11 +1,12 @@
 <%- include('partials/header'); -%>
 
-
+<h4>Your Pins</h4>
 <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">Title</th>
       <th scope="col">Description</th>
+      <th scope="col">Creator</th>
       <th scope="col">Link</th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
     <tr>
       <td><%= pin.title %></td>
       <td><%= pin.description %></td>
+      <td><%= pin.creator %></td>
       <td><a href="/pins/<%= pin._id %>" class="btn btn-sm btn-primary">Visit</a></td>
     </tr>
     <% }) %>
