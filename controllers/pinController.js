@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const Pin = require('../models/Pin');
 const User = require('../models/User');
-
+const { decodeToken } = require('../utils');
 module.exports.list_get = async (req, res) => {
   const token = req.cookies.authentication;
-  const decodedToken = jwt.verify(token, 'secret');
+  const decodedToken = decodeToken(token);
 
   const pins = await Pin.find({ user_id: decodedToken.id });
 
@@ -27,7 +27,7 @@ module.exports.create_post = async (req, res) => {
   const { title, description, link } = req.body;
 
   const token = req.cookies.authentication;
-  const decodedToken = jwt.verify(token, 'secret');
+  const decodedToken = decodeToken(token);
 
   const user = await User.findOne({ _id: decodedToken.id });
 
