@@ -3,7 +3,7 @@
   <div class="card-body">
     <h5 class="card-title"><%= pin.title %></h5>
     <p class="card-text"><%= pin.description %></p>
-    <a href="<%= pin.link %>" class="btn btn-primary">Visit</a>
+    <a href="<%= pin.link %>" target="_blank" class="card-link"><%= pin.link %></a>
   </div>
 </div>
 <%- include('partials/footer'); -%>
