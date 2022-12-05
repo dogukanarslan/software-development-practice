@@ -1,6 +1,7 @@
 # Software Development Practice
 
-## This is an application which you can save your resources.
+This is an application which you can save your resources.  
+Preview link: https://software-development-practice-service.onrender.com
 
 ### Description
 Welcome, this is an Express application that you can use to save any resources around the web and save them for later usage. Also, you can interact with users by making pins public and commenting on other users' pins.
@@ -11,6 +12,13 @@ Welcome, this is an Express application that you can use to save any resources a
 - Change directory to project path
 - Add USER, PASSWORD, and DB information to .env file
 - Run index script by running `nodemon index`
+
+## Technologies
+- Express.js
+- MongoDB
+- Mongoose
+- EJS
+- Jest
 
 ### Screenshots
 ![pinner-signup](https://user-images.githubusercontent.com/52973879/200196415-4eb36f9a-94be-438e-9349-d43e6474de65.png)
