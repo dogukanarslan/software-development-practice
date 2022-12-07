@@ -7,7 +7,7 @@
     "test": "jest",
     "start": "node server.js",
     "dev": "concurrently \"nodemon server.js\" \"npm run scss\"",
-    "scss": "sass --watch scss/main.scss public/styles.css"
+    "scss": "sass --watch --style=compressed --no-source-map scss/main.scss public/styles.css"
   },
   "repository": {
     "type": "git",
