@@ -3,7 +3,59 @@
   <div class="card-body">
     <h5 class="card-title"><%= pin.title %></h5>
     <p class="card-text"><%= pin.description %></p>
-    <a href="<%= pin.link %>" target="_blank" class="card-link"><%= pin.link %></a>
+    <a href="<%= pin.link %>" target="_blank" class="card-link"
+      ><%= pin.link %></a
+    >
+    <div class="mt-4">
+      <button id="like-button" class="btn <%= isLiked ? 'text-success' : '' %>" onclick="likePin()">
+        <div class="d-flex align-items-center">
+          <i data-feather="thumbs-up"></i><span id="like-count" class="ms-2"><%= pin.liked_by.length %></span>
+        </div>
+        
+      </button>
+      <button id="dislike-button" class="btn <%= isDisliked ? 'text-danger' : '' %>" onclick="dislikePin()">
+        <div class="d-flex align-items-center">
+          <i data-feather="thumbs-down"></i><span id="dislike-count" class="ms-2"><%= pin.disliked_by.length %></span>
+        </div>
+      </button>
+    </div>
   </div>
 </div>
+<script>
+  const pinId = '<%- pin.id %>';
+  const likeButton = document.querySelector('#like-button')
+  const likeCount = document.querySelector('#like-count')
+  const dislikeButton= document.querySelector('#dislike-button')
+  const dislikeCount= document.querySelector('#dislike-count')
+
+  const likePin = async (field) => {
+    const res = await (await fetch('/pins/like', {
+      method: 'POST',
+      body: JSON.stringify({ pinId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })).json();
+    
+    if (res) {
+      likeCount.textContent = res.liked_by.length;
+      likeButton.classList.toggle('text-success')
+    }
+  };
+
+  const dislikePin = async (field) => {
+    const res =await (await fetch('/pins/dislike', {
+      method: 'POST',
+      body: JSON.stringify({ pinId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })).json();
+    
+    if (res) {
+      dislikeCount.textContent = res.disliked_by.length;
+      dislikeButton.classList.toggle('text-danger')
+    }
+  };
+</script>
 <%- include('partials/footer'); -%>

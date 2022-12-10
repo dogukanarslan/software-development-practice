@@ -15,8 +15,83 @@ module.exports.list_get = async (req, res) => {
 
 module.exports.show_get = async (req, res) => {
   const pin = await Pin.findOne({ _id: req.params.pinId });
+  const token = req.cookies.authentication;
 
-  res.render('showPin', { pin });
+  const decodedToken = decodeToken(token);
+
+  const isLiked = pin.liked_by?.some((userId) => userId === decodedToken.id);
+  const isDisliked = pin.disliked_by?.some(
+    (userId) => userId === decodedToken.id
+  );
+
+  res.render('showPin', { pin, isLiked, isDisliked });
+};
+
+module.exports.like_post = async (req, res) => {
+  const { pinId, field } = req.body;
+  const token = req.cookies.authentication;
+  const pin = await Pin.findOne({ _id: pinId });
+
+  if (pin) {
+    const decodedToken = decodeToken(token);
+    if (pin.liked_by.some((userId) => userId === decodedToken.id)) {
+      pin.liked_by = pin.liked_by.filter(
+        (userId) => userId !== decodedToken.id
+      );
+    } else {
+      pin.liked_by.push(decodedToken.id);
+    }
+
+    pin.save();
+    res.status(200).json({ liked_by: pin.liked_by });
+  } else {
+    res.status(400).send('Pin does not exist');
+  }
+};
+
+module.exports.dislike_post = async (req, res) => {
+  const { pinId } = req.body;
+  const token = req.cookies.authentication;
+  const pin = await Pin.findOne({ _id: pinId });
+
+  if (pin) {
+    const decodedToken = decodeToken(token);
+    if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
+      pin.disliked_by = pin.disliked_by.filter(
+        (userId) => userId !== decodedToken.id
+      );
+    } else {
+      pin.disliked_by.push(decodedToken.id);
+    }
+
+    pin.save();
+    res.status(200).json({ disliked_by: pin.disliked_by });
+  } else {
+    res.status(400).send('Pin does not exist');
+  }
+};
+
+module.exports.like_post = async (req, res) => {
+  const { pinId } = req.body;
+  const token = req.cookies.authentication;
+  const pin = await Pin.findOne({ _id: pinId });
+
+  if (pin) {
+    const decodedToken = decodeToken(token);
+    if (pin.liked_by.some((userId) => userId === decodedToken.id)) {
+      console.log('equals');
+      pin.liked_by = pin.liked_by.filter(
+        (userId) => userId !== decodedToken.id
+      );
+    } else {
+      pin.liked_by.push(decodedToken.id);
+    }
+
+    pin.save();
+    res.status(200).json({ liked_by: pin.liked_by });
+  } else {
+    res.status(400).send('Pin does not exist');
+  }
 };
 
 module.exports.create_get = (req, res) => {

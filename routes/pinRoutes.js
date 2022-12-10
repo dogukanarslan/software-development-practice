@@ -11,6 +11,8 @@ router.post('/pins/create', pinController.create_post);
 
 router.get('/pins', pinController.list_get);
 
+router.post('/pins/like', pinController.like_post);
+router.post('/pins/dislike', pinController.dislike_post);
 router.get('/pins/:pinId', pinController.show_get);
 
 module.exports = router;
