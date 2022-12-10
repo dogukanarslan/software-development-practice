@@ -13,11 +13,13 @@ const pinSchema = new mongoose.Schema({
     required: [true, 'Link is required.'],
   },
   creator: {
-    type: String
+    type: String,
   },
   user_id: {
     type: String,
   },
+  liked_by: [String],
+  disliked_by: [String],
 });
 
 const Pin = mongoose.model('pin', pinSchema);
