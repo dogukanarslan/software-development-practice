@@ -12,6 +12,8 @@
         <td><%= data.title %></td>
         <td><%= data.description %></td>
         <td><%= data.creator %></td>
+        <td><%= data.liked_by.length %></td>
+        <td><%= data.disliked_by.length %></td>
         <td><a href="/pins/<%= data._id %>" class="btn btn-sm btn-primary">Visit</a></td>
       </tr>
       <% }) %>
