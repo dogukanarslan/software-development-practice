@@ -42,8 +42,17 @@ module.exports.like_post = async (req, res) => {
       pin.liked_by.push(decodedToken.id);
     }
 
+    // Check if post is currently disliked
+    if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
+      pin.disliked_by = pin.disliked_by.filter(
+        (userId) => userId !== decodedToken.id
+      );
+    }
+
     pin.save();
-    res.status(200).json({ liked_by: pin.liked_by });
+    res
+      .status(200)
+      .json({ liked_by: pin.liked_by, disliked_by: pin.disliked_by });
   } else {
     res.status(400).send('Pin does not exist');
   }
@@ -64,8 +73,17 @@ module.exports.dislike_post = async (req, res) => {
       pin.disliked_by.push(decodedToken.id);
     }
 
+    // Check if post is currently liked
+    if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
+      pin.liked_by = pin.liked_by.filter(
+        (userId) => userId !== decodedToken.id
+      );
+    }
+
     pin.save();
-    res.status(200).json({ disliked_by: pin.disliked_by });
+    res
+      .status(200)
+      .json({ disliked_by: pin.disliked_by, liked_by: pin.liked_by });
   } else {
     res.status(400).send('Pin does not exist');
   }

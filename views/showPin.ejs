@@ -40,6 +40,11 @@
     if (res) {
       likeCount.textContent = res.liked_by.length;
       likeButton.classList.toggle('text-success')
+      
+      if (res.disliked_by.length != dislikeCount.textContent) {
+        dislikeCount.textContent = res.disliked_by.length;
+        dislikeButton.classList.remove('text-danger')
+      }
     }
   };
 
@@ -55,6 +60,11 @@
     if (res) {
       dislikeCount.textContent = res.disliked_by.length;
       dislikeButton.classList.toggle('text-danger')
+
+      if (res.liked_by.length != likeCount.textContent) {
+        likeCount.textContent = res.liked_by.length;
+        likeButton.classList.remove('text-success')
+      }
     }
   };
 </script>
