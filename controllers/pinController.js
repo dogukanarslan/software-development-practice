@@ -71,29 +71,6 @@ module.exports.dislike_post = async (req, res) => {
   }
 };
 
-module.exports.like_post = async (req, res) => {
-  const { pinId } = req.body;
-  const token = req.cookies.authentication;
-  const pin = await Pin.findOne({ _id: pinId });
-
-  if (pin) {
-    const decodedToken = decodeToken(token);
-    if (pin.liked_by.some((userId) => userId === decodedToken.id)) {
-      console.log('equals');
-      pin.liked_by = pin.liked_by.filter(
-        (userId) => userId !== decodedToken.id
-      );
-    } else {
-      pin.liked_by.push(decodedToken.id);
-    }
-
-    pin.save();
-    res.status(200).json({ liked_by: pin.liked_by });
-  } else {
-    res.status(400).send('Pin does not exist');
-  }
-};
-
 module.exports.create_get = (req, res) => {
   res.render('createPin');
 };
