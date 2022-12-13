@@ -1,7 +1,7 @@
 # Software Development Practice
 
 This is an application which you can save your resources.  
-Preview link: https://software-development-practice-service.onrender.com
+Preview link: http://ec2-18-117-131-66.us-east-2.compute.amazonaws.com/
 
 ### Description
 Welcome, this is an Express application that you can use to save any resources around the web and save them for later usage. Also, you can interact with users by making pins public and commenting on other users' pins.
