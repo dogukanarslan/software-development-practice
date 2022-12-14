@@ -1,79 +1,92 @@
-<%- include('partials/header'); -%>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+  <body>
+    <%- include('partials/navbar'); -%>
+    <form class="w-25 mx-auto">
+      <h2>Sign up</h2>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email</label>
+        <input
+          type="text"
+          name="email"
+          class="form-control"
+          placeholder="john.doe@example.com"
+        />
+        <div class="email error"></div>
+      </div>
 
-<form class="w-25 mx-auto">
-  <h2>Sign up</h2>
-  <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Email</label>
-    <input
-      type="text"
-      name="email"
-      class="form-control"
-      placeholder="john.doe@example.com"
-    />
-    <div class="email error"></div>
-  </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required />
+        <div class="password error"></div>
+      </div>
 
-  <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" required />
-    <div class="password error"></div>
-  </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          name="name"
+          class="form-control"
+          placeholder="John"
+        />
+        <div class="name error"></div>
+      </div>
 
-  <div class="mb-3">
-    <label for="name" class="form-label">Name</label>
-    <input type="text" name="name" class="form-control" placeholder="John" />
-    <div class="name error"></div>
-  </div>
+      <div class="mb-3">
+        <label for="surname" class="form-label">Surname</label>
+        <input
+          type="text"
+          name="surname"
+          class="form-control"
+          placeholder="Doe"
+        />
+        <div class="surname error"></div>
+      </div>
 
-  <div class="mb-3">
-    <label for="surname" class="form-label">Surname</label>
-    <input type="text" name="surname" class="form-control" placeholder="Doe" />
-    <div class="surname error"></div>
-  </div>
+      <button class="btn btn-primary">Sign up</button>
+    </form>
+    <%- include('partials/footer'); -%>
+    <script>
+      const form = document.querySelector('form');
+      const emailError = document.querySelector('.email.error');
+      const passwordError = document.querySelector('.password.error');
 
-  <button class="btn btn-primary">Sign up</button>
-</form>
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-<script>
-  const form = document.querySelector('form');
-  const emailError = document.querySelector('.email.error');
-  const passwordError = document.querySelector('.password.error');
+        // Reset errors
+        emailError.textContent = '';
+        passwordError.textContent = '';
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+        const email = form.email.value;
+        const password = form.password.value;
+        const name = form.name.value;
+        const surname = form.surname.value;
 
-    // Reset errors
-    emailError.textContent = '';
-    passwordError.textContent = '';
+        try {
+          const res = await fetch('/signup', {
+            method: 'POST',
+            body: JSON.stringify({ email, password, name, surname }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
 
-    const email = form.email.value;
-    const password = form.password.value;
-    const name = form.name.value;
-    const surname = form.surname.value;
+          const data = await res.json();
 
-    try {
-      const res = await fetch('/signup', {
-        method: 'POST',
-        body: JSON.stringify({ email, password, name, surname }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+          if (data.errors) {
+            emailError.textContent = data.errors.email;
+            passwordError.textContent = data.errors.password;
+          }
+
+          if (data.user) {
+            location.assign('/');
+          }
+        } catch (err) {
+          console.log(err);
+        }
       });
-
-      const data = await res.json();
-
-      if (data.errors) {
-        emailError.textContent = data.errors.email;
-        passwordError.textContent = data.errors.password;
-      }
-
-      if (data.user) {
-        location.assign('/');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  });
-</script>
-
-<%- include('partials/footer'); -%>
+    </script>
+  </body>
+</html>

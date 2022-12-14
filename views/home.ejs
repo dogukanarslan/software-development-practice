@@ -1,5 +1,16 @@
-<%- include('partials/header'); %>
-<h4>All Pins</h4>
-<%- include('partials/table', {data: {header: ['Title', 'Description', 'Creator', 'Total Likes', 'Total Dislikes', 'Link'], body:  pins}}); %>
-
-<%- include('partials/footer'); %>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head'); %>
+  <body>
+    <%- include('partials/navbar'); %>
+    <div class="container">
+      <h4>All Pins</h4>
+      <%- include('partials/table', {data: {header: ['Title', 'Description',
+      'Creator', 'Total Likes', 'Total Dislikes', 'Link'], body: pins}}); %>
+    </div>
+    <%- include('partials/footer'); %>
+  </body>
+  <script>
+    feather.replace();
+  </script>
+</html>

@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand bg-dark navbar-dark mb-4 shadow-sm sticky-top">
+  <div class="container-fluid">
+    <a href="/" class="navbar-brand">Pinner</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <% if (user) { %>
+        <li class="nav-item"><a href="/pins" class="nav-link">Pins</a></li>
+        <li class="nav-item">
+          <a href="/pins/create" class="nav-link">Create Pin</a>
+        </li>
+        <% } %>
+      </ul>
+      <div class="ms-auto">
+        <% if (!user) { %>
+        <a href="/login" class="btn btn-dark">Log in</a>
+        <a href="/signup" class="btn btn-primary">Sign up</a>
+        <% } else { %>
+        <span class="navbar-text"> Welcome, <%= user.email %> </span>
+        <a href="/logout" class="btn btn-primary">Log out</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
