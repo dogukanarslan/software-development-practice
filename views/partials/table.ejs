@@ -1,21 +1,23 @@
 <table class="table table-hover">
-    <thead>
-      <tr>
-        <% data.header.forEach(title => { %>
-            <th scope="col"><%= title %></th>
-        <% }) %>
-      </tr>
-    </thead>
-    <tbody>
-      <% data.body.forEach(data => { %>
-      <tr>
-        <td><%= data.title %></td>
-        <td><%= data.description %></td>
-        <td><%= data.creator %></td>
-        <td><%= data.liked_by.length %></td>
-        <td><%= data.disliked_by.length %></td>
-        <td><a href="/pins/<%= data._id %>" class="btn btn-sm btn-primary">Visit</a></td>
-      </tr>
+  <thead>
+    <tr>
+      <% data.header.forEach(title => { %>
+      <th scope="col"><%= title %></th>
       <% }) %>
-    </tbody>
-  </table>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.body.forEach(data => { %>
+    <tr>
+      <td><%= data.title %></td>
+      <td><%= data.description %></td>
+      <td><%= data.creator %></td>
+      <td><%= data.liked_by.length %></td>
+      <td><%= data.disliked_by.length %></td>
+      <td>
+        <a href="/pins/<%= data._id %>" class="btn btn-sm btn-primary">Visit</a>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

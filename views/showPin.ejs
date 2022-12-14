@@ -1,71 +1,99 @@
-<%- include('partials/header'); -%>
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title"><%= pin.title %></h5>
-    <p class="card-text"><%= pin.description %></p>
-    <a href="<%= pin.link %>" target="_blank" class="card-link"
-      ><%= pin.link %></a
-    >
-    <div class="mt-4">
-      <button id="like-button" class="btn <%= isLiked ? 'text-success' : '' %>" onclick="likePin()">
-        <div class="d-flex align-items-center">
-          <i data-feather="thumbs-up"></i><span id="like-count" class="ms-2"><%= pin.liked_by.length %></span>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+  <body>
+    <%- include('partials/navbar'); %>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= pin.title %></h5>
+          <p class="card-text"><%= pin.description %></p>
+          <a href="<%= pin.link %>" target="_blank" class="card-link"
+            ><%= pin.link %></a
+          >
+          <div class="mt-4">
+            <button
+              id="like-button"
+              class="btn <%= isLiked ? 'text-success' : '' %>"
+              onclick="likePin()"
+            >
+              <div class="d-flex align-items-center">
+                <i data-feather="thumbs-up"></i
+                ><span id="like-count" class="ms-2"
+                  ><%= pin.liked_by.length %></span
+                >
+              </div>
+            </button>
+            <button
+              id="dislike-button"
+              class="btn <%= isDisliked ? 'text-danger' : '' %>"
+              onclick="dislikePin()"
+            >
+              <div class="d-flex align-items-center">
+                <i data-feather="thumbs-down"></i
+                ><span id="dislike-count" class="ms-2"
+                  ><%= pin.disliked_by.length %></span
+                >
+              </div>
+            </button>
+          </div>
         </div>
-        
-      </button>
-      <button id="dislike-button" class="btn <%= isDisliked ? 'text-danger' : '' %>" onclick="dislikePin()">
-        <div class="d-flex align-items-center">
-          <i data-feather="thumbs-down"></i><span id="dislike-count" class="ms-2"><%= pin.disliked_by.length %></span>
-        </div>
-      </button>
+      </div>
     </div>
-  </div>
-</div>
-<script>
-  const pinId = '<%- pin.id %>';
-  const likeButton = document.querySelector('#like-button')
-  const likeCount = document.querySelector('#like-count')
-  const dislikeButton= document.querySelector('#dislike-button')
-  const dislikeCount= document.querySelector('#dislike-count')
 
-  const likePin = async (field) => {
-    const res = await (await fetch('/pins/like', {
-      method: 'POST',
-      body: JSON.stringify({ pinId }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })).json();
-    
-    if (res) {
-      likeCount.textContent = res.liked_by.length;
-      likeButton.classList.toggle('text-success')
-      
-      if (res.disliked_by.length != dislikeCount.textContent) {
-        dislikeCount.textContent = res.disliked_by.length;
-        dislikeButton.classList.remove('text-danger')
-      }
-    }
-  };
+    <%- include('partials/footer'); -%>
 
-  const dislikePin = async (field) => {
-    const res =await (await fetch('/pins/dislike', {
-      method: 'POST',
-      body: JSON.stringify({ pinId }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })).json();
-    
-    if (res) {
-      dislikeCount.textContent = res.disliked_by.length;
-      dislikeButton.classList.toggle('text-danger')
+    <script>
+      feather.replace();
+      const pinId = '<%- pin.id %>';
+      const likeButton = document.querySelector('#like-button');
+      const likeCount = document.querySelector('#like-count');
+      const dislikeButton = document.querySelector('#dislike-button');
+      const dislikeCount = document.querySelector('#dislike-count');
 
-      if (res.liked_by.length != likeCount.textContent) {
-        likeCount.textContent = res.liked_by.length;
-        likeButton.classList.remove('text-success')
-      }
-    }
-  };
-</script>
-<%- include('partials/footer'); -%>
+      const likePin = async (field) => {
+        const res = await (
+          await fetch('/pins/like', {
+            method: 'POST',
+            body: JSON.stringify({ pinId }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+        ).json();
+
+        if (res) {
+          likeCount.textContent = res.liked_by.length;
+          likeButton.classList.toggle('text-success');
+
+          if (res.disliked_by.length != dislikeCount.textContent) {
+            dislikeCount.textContent = res.disliked_by.length;
+            dislikeButton.classList.remove('text-danger');
+          }
+        }
+      };
+
+      const dislikePin = async (field) => {
+        const res = await (
+          await fetch('/pins/dislike', {
+            method: 'POST',
+            body: JSON.stringify({ pinId }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+        ).json();
+
+        if (res) {
+          dislikeCount.textContent = res.disliked_by.length;
+          dislikeButton.classList.toggle('text-danger');
+
+          if (res.liked_by.length != likeCount.textContent) {
+            likeCount.textContent = res.liked_by.length;
+            likeButton.classList.remove('text-success');
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,60 +1,63 @@
-<%- include('partials/header'); -%>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+  <body>
+    <%- include('partials/navbar'); %>
+    <form class="w-25 mx-auto">
+      <h2>Log in</h2>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" name="email" class="form-control" required />
+        <div class="email error"></div>
+      </div>
 
-<form class="w-25 mx-auto">
-  <h2>Log in</h2>
-  <div class="mb-3">
-    <label for="email" class="form-label">Email</label>
-    <input type="text" name="email" class="form-control" required />
-    <div class="email error"></div>
-  </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required />
+        <div class="password error"></div>
+      </div>
 
-  <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" required />
-    <div class="password error"></div>
-  </div>
+      <button class="btn btn-primary">Log in</button>
+    </form>
+    <%- include('partials/footer'); -%>
+    <script>
+      const form = document.querySelector('form');
+      const emailError = document.querySelector('.email.error');
+      const passwordError = document.querySelector('.password.error');
 
-  <button class="btn btn-primary">Log in</button>
-</form>
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-<script>
-  const form = document.querySelector('form');
-  const emailError = document.querySelector('.email.error');
-  const passwordError = document.querySelector('.password.error');
+        // Reset errors
+        emailError.textContent = '';
+        passwordError.textContent = '';
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+        const email = form.email.value;
+        const password = form.password.value;
 
-    // Reset errors
-    emailError.textContent = '';
-    passwordError.textContent = '';
+        try {
+          const res = await fetch('/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
 
-    const email = form.email.value;
-    const password = form.password.value;
+          const data = await res.json();
 
-    try {
-      const res = await fetch('/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+          if (data.errors) {
+            emailError.textContent = data.errors.email;
+            passwordError.textContent = data.errors.password;
+          }
+
+          if (data.user) {
+            location.assign('/');
+          }
+        } catch (err) {
+          console.log(err);
+        }
       });
-
-      const data = await res.json();
-
-      if (data.errors) {
-        emailError.textContent = data.errors.email;
-        passwordError.textContent = data.errors.password;
-      }
-
-      if (data.user) {
-        location.assign('/');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  });
-</script>
-
-<%- include('partials/footer'); -%>
+    </script>
+  </body>
+</html>
