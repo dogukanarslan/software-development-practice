@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const Pin = require('./models/Pin');
@@ -13,6 +14,15 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+  '/js',
+  express.static(
+    path.join(
+      __dirname,
+      'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
+    )
+  )
+);
 
 // View engine
 app.set('view engine', 'ejs');
@@ -21,7 +31,7 @@ app.set('view engine', 'ejs');
 app.get('*', checkUser);
 app.get('/', requireAuth, async (req, res) => {
   const pins = await Pin.find();
-  res.render('home', { pins });
+  res.render('home', { pins, pathname: req.url });
 });
 
 app.use(authRoutes);

@@ -59,12 +59,11 @@ footer {
   }
 
   & .nav-link.active {
-    color: $primary;
+    background-color: $primary;
   }
 
   & .nav-link:hover {
     background-color: $primary;
-
     transition: 0.4s;
   }
 

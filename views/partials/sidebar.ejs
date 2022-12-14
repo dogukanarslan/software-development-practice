@@ -2,19 +2,19 @@
   <div class="pt-5">
     <ul class="nav flex-column p-2">
       <li class="nav-item">
-        <a class="nav-link" href="/">
+        <a class="nav-link <%= pathname === '/' ? 'active' : '' %>" href="/">
           <span data-feather="home"></span>
           Home
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pins">
+        <a class="nav-link <%= pathname === '/pins' ? 'active' : '' %>" href="/pins">
           <span data-feather="map-pin"></span>
           Your pins
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pins/create">
+        <a class="nav-link <%= pathname === '/pins/create' ? 'active' : '' %>" href="/pins/create">
           <span data-feather="plus-circle"></span>
           Create pin
         </a>
