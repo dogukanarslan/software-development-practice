@@ -10,6 +10,7 @@ module.exports.list_get = async (req, res) => {
 
   res.render('listPins', {
     pins,
+    pathname: req.url,
   });
 };
 
@@ -19,12 +20,27 @@ module.exports.show_get = async (req, res) => {
 
   const decodedToken = decodeToken(token);
 
+  const likedUsers = await User.find({
+    _id: { $in: pin.liked_by },
+  });
+
+  const dislikedUsers = await User.find({
+    _id: { $in: pin.disliked_by },
+  });
+
   const isLiked = pin.liked_by?.some((userId) => userId === decodedToken.id);
   const isDisliked = pin.disliked_by?.some(
     (userId) => userId === decodedToken.id
   );
 
-  res.render('showPin', { pin, isLiked, isDisliked });
+  res.render('showPin', {
+    pin,
+    liked_users: likedUsers,
+    disliked_users: dislikedUsers,
+    isLiked,
+    isDisliked,
+    pathname: req.url
+  });
 };
 
 module.exports.like_post = async (req, res) => {
@@ -90,7 +106,8 @@ module.exports.dislike_post = async (req, res) => {
 };
 
 module.exports.create_get = (req, res) => {
-  res.render('createPin');
+  console.log('req', req.url);
+  res.render('createPin', { pathname: req.url });
 };
 
 module.exports.create_post = async (req, res) => {
