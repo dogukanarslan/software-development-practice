@@ -1,33 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('partials/head') %>
+  <%- include('partials/head', {title: 'Create pin'}) %>
   <body>
     <%- include('partials/navbar'); %>
-    <form class="w-25 mx-auto">
-      <h2>Create pin</h2>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-light sidebar">
+          <%- include('partials/sidebar') %>
+        </div>
+        <div class="col-md-10 ms-auto">
+          <form class="w-25 mx-auto">
+            <h2>Create pin</h2>
 
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" name="title" class="form-control" required />
-        <div class="title error"></div>
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" name="title" class="form-control" required />
+              <div class="title error"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <input type="text" name="description" class="form-control" />
+              <div class="description error"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="link" class="form-label">Link</label>
+              <input type="text" name="link" class="form-control" required />
+              <div class="link error"></div>
+            </div>
+
+            <button class="btn btn-primary">Create pin</button>
+          </form>
+        </div>
       </div>
+    </div>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <input type="text" name="description" class="form-control" />
-        <div class="description error"></div>
-      </div>
-
-      <div class="mb-3">
-        <label for="link" class="form-label">Link</label>
-        <input type="text" name="link" class="form-control" required />
-        <div class="link error"></div>
-      </div>
-
-      <button class="btn btn-primary">Create pin</button>
-    </form>
     <%- include('partials/footer') %>
     <script>
+      feather.replace();
       const form = document.querySelector('form');
       const titleError = document.querySelector('.title.error');
       const descriptionError = document.querySelector('.description.error');
