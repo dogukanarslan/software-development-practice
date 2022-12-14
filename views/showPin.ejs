@@ -17,30 +17,32 @@
                 ><%= pin.link %></a
               >
               <div class="mt-4">
-                <button
-                  id="like-button"
-                  class="btn <%= isLiked ? 'text-success' : '' %>"
-                  onclick="likePin()"
-                >
-                  <div class="d-flex align-items-center">
-                    <i data-feather="thumbs-up"></i
-                    ><span id="like-count" class="ms-2"
-                      ><%= pin.liked_by.length %></span
-                    >
-                  </div>
-                </button>
-                <button
-                  id="dislike-button"
-                  class="btn <%= isDisliked ? 'text-danger' : '' %>"
-                  onclick="dislikePin()"
-                >
-                  <div class="d-flex align-items-center">
-                    <i data-feather="thumbs-down"></i
-                    ><span id="dislike-count" class="ms-2"
-                      ><%= pin.disliked_by.length %></span
-                    >
-                  </div>
-                </button>
+                <div class="btn-group">
+                  <button
+                    id="like-button"
+                    class="btn btn-outline-secondary <%= isLiked ? 'active' : '' %>"
+                    onclick="likePin()"
+                  >
+                    <div class="d-flex align-items-center">
+                      <i data-feather="thumbs-up"></i
+                      ><span id="like-count" class="ms-2"
+                        ><%= pin.liked_by.length %></span
+                      >
+                    </div>
+                  </button>
+                  <button
+                    id="dislike-button"
+                    class="btn btn-outline-secondary <%= isDisliked ? 'active' : '' %>"
+                    onclick="dislikePin()"
+                  >
+                    <div class="d-flex align-items-center">
+                      <i data-feather="thumbs-down"></i
+                      ><span id="dislike-count" class="ms-2"
+                        ><%= pin.disliked_by.length %></span
+                      >
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -71,11 +73,11 @@
 
         if (res) {
           likeCount.textContent = res.liked_by.length;
-          likeButton.classList.toggle('text-success');
+          likeButton.classList.toggle('active');
 
           if (res.disliked_by.length != dislikeCount.textContent) {
             dislikeCount.textContent = res.disliked_by.length;
-            dislikeButton.classList.remove('text-danger');
+            dislikeButton.classList.remove('active');
           }
         }
       };
@@ -93,11 +95,11 @@
 
         if (res) {
           dislikeCount.textContent = res.disliked_by.length;
-          dislikeButton.classList.toggle('text-danger');
+          dislikeButton.classList.toggle('active');
 
           if (res.liked_by.length != likeCount.textContent) {
             likeCount.textContent = res.liked_by.length;
-            likeButton.classList.remove('text-success');
+            likeButton.classList.remove('active');
           }
         }
       };
