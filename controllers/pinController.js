@@ -43,7 +43,7 @@ module.exports.show_get = async (req, res) => {
   });
 };
 
-module.exports.like_post = async (req, res) => {
+module.exports.like_pin = async (req, res) => {
   const { pinId, field } = req.body;
   const token = req.cookies.authentication;
   const pin = await Pin.findOne({ _id: pinId });
@@ -74,7 +74,7 @@ module.exports.like_post = async (req, res) => {
   }
 };
 
-module.exports.dislike_post = async (req, res) => {
+module.exports.dislike_pin = async (req, res) => {
   const { pinId } = req.body;
   const token = req.cookies.authentication;
   const pin = await Pin.findOne({ _id: pinId });
