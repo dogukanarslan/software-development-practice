@@ -2,14 +2,6 @@
   <div class="container-fluid">
     <a href="/" class="navbar-brand">Pinner</a>
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav">
-        <% if (user) { %>
-        <li class="nav-item"><a href="/pins" class="nav-link">Pins</a></li>
-        <li class="nav-item">
-          <a href="/pins/create" class="nav-link">Create Pin</a>
-        </li>
-        <% } %>
-      </ul>
       <div class="ms-auto">
         <% if (!user) { %>
         <a href="/login" class="btn btn-dark">Log in</a>

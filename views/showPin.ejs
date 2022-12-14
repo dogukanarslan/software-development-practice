@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('partials/head') %>
+  <%- include('partials/head', {title: 'Pin detail'}) %>
   <body>
     <%- include('partials/navbar'); %>
-    <div class="container">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= pin.title %></h5>
-          <p class="card-text"><%= pin.description %></p>
-          <a href="<%= pin.link %>" target="_blank" class="card-link"
-            ><%= pin.link %></a
-          >
-          <div class="mt-4">
-            <button
-              id="like-button"
-              class="btn <%= isLiked ? 'text-success' : '' %>"
-              onclick="likePin()"
-            >
-              <div class="d-flex align-items-center">
-                <i data-feather="thumbs-up"></i
-                ><span id="like-count" class="ms-2"
-                  ><%= pin.liked_by.length %></span
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-light sidebar">
+          <%- include('partials/sidebar') %>
+        </div>
+        <div class="col-md-10 ms-auto">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= pin.title %></h5>
+              <p class="card-text"><%= pin.description %></p>
+              <a href="<%= pin.link %>" target="_blank" class="card-link"
+                ><%= pin.link %></a
+              >
+              <div class="mt-4">
+                <button
+                  id="like-button"
+                  class="btn <%= isLiked ? 'text-success' : '' %>"
+                  onclick="likePin()"
                 >
-              </div>
-            </button>
-            <button
-              id="dislike-button"
-              class="btn <%= isDisliked ? 'text-danger' : '' %>"
-              onclick="dislikePin()"
-            >
-              <div class="d-flex align-items-center">
-                <i data-feather="thumbs-down"></i
-                ><span id="dislike-count" class="ms-2"
-                  ><%= pin.disliked_by.length %></span
+                  <div class="d-flex align-items-center">
+                    <i data-feather="thumbs-up"></i
+                    ><span id="like-count" class="ms-2"
+                      ><%= pin.liked_by.length %></span
+                    >
+                  </div>
+                </button>
+                <button
+                  id="dislike-button"
+                  class="btn <%= isDisliked ? 'text-danger' : '' %>"
+                  onclick="dislikePin()"
                 >
+                  <div class="d-flex align-items-center">
+                    <i data-feather="thumbs-down"></i
+                    ><span id="dislike-count" class="ms-2"
+                      ><%= pin.disliked_by.length %></span
+                    >
+                  </div>
+                </button>
               </div>
-            </button>
+            </div>
           </div>
         </div>
       </div>

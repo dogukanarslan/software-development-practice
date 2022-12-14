@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('partials/head'); %>
+  <%- include('partials/head', {title: 'Home'}); %>
   <body>
     <%- include('partials/navbar'); %>
-    <div class="container">
-      <h4>All Pins</h4>
-      <%- include('partials/table', {data: {header: ['Title', 'Description',
-      'Creator', 'Total Likes', 'Total Dislikes', 'Link'], body: pins}}); %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-light sidebar">
+          <%- include('partials/sidebar') %>
+        </div>
+        <div class="col-md-10 ms-auto">
+          <h4>All Pins</h4>
+          <%- include('partials/table', {data: {header: ['Title', 'Description',
+          'Creator', 'Total Likes', 'Total Dislikes', 'Link'], body: pins}}); %>
+        </div>
+      </div>
     </div>
     <%- include('partials/footer'); %>
   </body>
