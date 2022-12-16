@@ -39,7 +39,7 @@ module.exports.show_get = async (req, res) => {
     disliked_users: dislikedUsers,
     isLiked,
     isDisliked,
-    pathname: req.url
+    pathname: req.url,
   });
 };
 
@@ -65,10 +65,21 @@ module.exports.like_pin = async (req, res) => {
       );
     }
 
+    const likedUsers = await User.find({
+      _id: { $in: pin.liked_by },
+    });
+
+    const dislikedUsers = await User.find({
+      _id: { $in: pin.disliked_by },
+    });
+
     pin.save();
-    res
-      .status(200)
-      .json({ liked_by: pin.liked_by, disliked_by: pin.disliked_by });
+    res.status(200).json({
+      liked_by: pin.liked_by,
+      disliked_by: pin.disliked_by,
+      liked_users: likedUsers,
+      disliked_users: dislikedUsers,
+    });
   } else {
     res.status(400).send('Pin does not exist');
   }
@@ -96,10 +107,23 @@ module.exports.dislike_pin = async (req, res) => {
       );
     }
 
+    const likedUsers = await User.find({
+      _id: { $in: pin.liked_by },
+    });
+
+    const dislikedUsers = await User.find({
+      _id: { $in: pin.disliked_by },
+    });
+
     pin.save();
     res
       .status(200)
-      .json({ disliked_by: pin.disliked_by, liked_by: pin.liked_by });
+      .json({
+        disliked_by: pin.disliked_by,
+        liked_by: pin.liked_by,
+        liked_users: likedUsers,
+        disliked_users: dislikedUsers,
+      });
   } else {
     res.status(400).send('Pin does not exist');
   }
