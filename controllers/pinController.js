@@ -116,21 +116,18 @@ module.exports.dislike_pin = async (req, res) => {
     });
 
     pin.save();
-    res
-      .status(200)
-      .json({
-        disliked_by: pin.disliked_by,
-        liked_by: pin.liked_by,
-        liked_users: likedUsers,
-        disliked_users: dislikedUsers,
-      });
+    res.status(200).json({
+      disliked_by: pin.disliked_by,
+      liked_by: pin.liked_by,
+      liked_users: likedUsers,
+      disliked_users: dislikedUsers,
+    });
   } else {
     res.status(400).send('Pin does not exist');
   }
 };
 
 module.exports.create_get = (req, res) => {
-  console.log('req', req.url);
   res.render('createPin', { pathname: req.url });
 };
 
