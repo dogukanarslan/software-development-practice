@@ -6,11 +6,18 @@ module.exports.list_get = async (req, res) => {
   const token = req.cookies.authentication;
   const decodedToken = decodeToken(token);
 
-  const pins = await Pin.find({ user_id: decodedToken.id });
+  const searchData = req.query['search-data'];
+
+  const pins = await Pin.find({ user_id: decodedToken.id })
+    .where('user_id')
+    .equals(decodedToken.id)
+    .where('title')
+    .where('description')
+    .regex(new RegExp(searchData, 'i'));
 
   res.render('listPins', {
     pins,
-    pathname: req.url,
+    pathname: req.path,
   });
 };
 
