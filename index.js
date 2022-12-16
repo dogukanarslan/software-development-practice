@@ -30,7 +30,14 @@ app.set('view engine', 'ejs');
 // Routes
 app.get('*', checkUser);
 app.get('/', requireAuth, async (req, res) => {
-  const pins = await Pin.find();
+
+  const searchData = req.query['search-data'];
+
+  const pins = await Pin.find()
+    .where('title')
+    .where('description')
+    .regex(new RegExp(searchData, 'i'));
+
   res.render('home', { pins, pathname: req.url });
 });
 
