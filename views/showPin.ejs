@@ -92,7 +92,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <ul class="list-group">
+            <ul id="liked-users-list" class="list-group">
               <% liked_users.forEach((user) => { %>
               <li class="list-group-item">
                 <%= user.name %> <%= user.surname %>
@@ -131,7 +131,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <ul class="list-group">
+            <ul id="disliked-users-list" class="list-group">
               <% disliked_users.forEach((user) => { %>
               <li class="list-group-item">
                 <%= user.name %> <%= user.surname %>
@@ -165,6 +165,8 @@
       const dislikesCountButton = document.querySelector(
         '#dislikes-count-button'
       );
+      const likedUsersList = document.querySelector('#liked-users-list');
+      const dislikedUsersList = document.querySelector('#disliked-users-list');
 
       const likePin = async (field) => {
         const res = await (
@@ -178,6 +180,21 @@
         ).json();
 
         if (res) {
+          let likedUsersHtml = '';
+          let dislikedUsersHtml = '';
+
+          let likedUsers = res.liked_users;
+          let dislikedUsers = res.disliked_users;
+
+          likedUsers.forEach((likedUser) => {
+            likedUsersHtml += `<li class="list-group-item">${likedUser.name} ${likedUser.surname}</li>`;
+          });
+          dislikedUsers.forEach((dislikedUser) => {
+            dislikedUsersHtml += `<li class="list-group-item">${dislikedUser.name} ${dislikedUser.surname}</li>`;
+          });
+          dislikedUsersList.innerHTML = dislikedUsersHtml;
+          likedUsersList.innerHTML = likedUsersHtml;
+
           likeCount.textContent = res.liked_by.length;
           likesCountButton.textContent = res.liked_by.length + ' likes';
           likeButton.classList.toggle('active');
@@ -203,8 +220,24 @@
         ).json();
 
         if (res) {
+          let likedUsersHtml = '';
+          let dislikedUsersHtml = '';
+
+          let likedUsers = res.liked_users;
+          let dislikedUsers = res.disliked_users;
+
+          likedUsers.forEach((likedUser) => {
+            likedUsersHtml += `<li class="list-group-item">${likedUser.name} ${likedUser.surname}</li>`;
+          });
+          dislikedUsers.forEach((dislikedUser) => {
+            dislikedUsersHtml += `<li class="list-group-item">${dislikedUser.name} ${dislikedUser.surname}</li>`;
+          });
+          dislikedUsersList.innerHTML = dislikedUsersHtml;
+          likedUsersList.innerHTML = likedUsersHtml;
+
           dislikeCount.textContent = res.disliked_by.length;
-          dislikesCountButton.textContent = res.disliked_by.length + ' dislikes';
+          dislikesCountButton.textContent =
+            res.disliked_by.length + ' dislikes';
           dislikeButton.classList.toggle('active');
 
           if (res.liked_by.length != likeCount.textContent) {
