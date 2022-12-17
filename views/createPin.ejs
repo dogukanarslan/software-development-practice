@@ -13,7 +13,7 @@
             <h2>Create pin</h2>
 
             <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
+              <label for="title" class="form-label">Title*</label>
               <input type="text" name="title" class="form-control" required />
               <div class="title error"></div>
             </div>
@@ -25,9 +25,15 @@
             </div>
 
             <div class="mb-3">
-              <label for="link" class="form-label">Link</label>
+              <label for="link" class="form-label">Link*</label>
               <input type="text" name="link" class="form-control" required />
               <div class="link error"></div>
+            </div>
+
+            <div class="mb-3">
+              <label for="tag" class="form-label">Tag</label>
+              <input type="text" name="tag" class="form-control" />
+              <div class="tag error"></div>
             </div>
 
             <button class="btn btn-primary">Create pin</button>
@@ -43,6 +49,7 @@
       const titleError = document.querySelector('.title.error');
       const descriptionError = document.querySelector('.description.error');
       const linkError = document.querySelector('.link.error');
+      const tagError = document.querySelector('.tag.error');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -51,15 +58,17 @@
         titleError.textContent = '';
         descriptionError.textContent = '';
         linkError.textContent = '';
+        tagError.textContent = '';
 
         const title = form.title.value;
         const description = form.description.value;
         const link = form.link.value;
+        const tag = form.tag.value;
 
         try {
           const res = await fetch('/pins/create', {
             method: 'POST',
-            body: JSON.stringify({ title, description, link }),
+            body: JSON.stringify({ title, description, link, tag }),
             headers: {
               'Content-Type': 'application/json',
             },
@@ -71,6 +80,7 @@
             titleError.textContent = data.errors.title;
             descriptionError.textContent = data.errors.description;
             linkError.textContent = data.errors.link;
+            tagError.textContent = data.errors.tag;
           }
 
           if (data.pin) {
