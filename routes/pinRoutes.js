@@ -10,6 +10,9 @@ router.get('/pins/create', pinController.create_get);
 router.post('/pins/create', pinController.create_post);
 
 router.get('/pins', pinController.list_get);
+router.get('/pins/saved', pinController.list_saved_get);
+
+router.get('/pins/save/:pinId', pinController.save_pin);
 
 router.get('/pins/interact/:pinId', pinController.interact_pin);
 router.get('/pins/:pinId', pinController.show_get);

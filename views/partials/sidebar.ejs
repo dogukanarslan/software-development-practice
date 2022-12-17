@@ -9,6 +9,15 @@
       </li>
       <li class="nav-item">
         <a
+          class="nav-link <%= pathname === '/pins/create' ? 'active' : '' %>"
+          href="/pins/create"
+        >
+          <span data-feather="plus-circle"></span>
+          Create pin
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
           class="nav-link <%= pathname === '/pins' ? 'active' : '' %>"
           href="/pins"
         >
@@ -18,11 +27,11 @@
       </li>
       <li class="nav-item">
         <a
-          class="nav-link <%= pathname === '/pins/create' ? 'active' : '' %>"
-          href="/pins/create"
+          class="nav-link <%= pathname === '/pins/saved' ? 'active' : '' %>"
+          href="/pins/saved"
         >
-          <span data-feather="plus-circle"></span>
-          Create pin
+          <span data-feather="save"></span>
+          Saved pins
         </a>
       </li>
     </ul>
