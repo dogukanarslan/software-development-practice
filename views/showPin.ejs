@@ -59,9 +59,20 @@
                   <%= pin.saved_by.length %> saves
                 </button>
               </p>
-              <a href="<%= pin.link %>" target="_blank" class="card-link"
-                ><%= pin.link %></a
-              >
+              <a
+                href="<%= pin.link %>"
+                target="_blank"
+                class="btn btn-secondary"
+                ><% if (pin.tag) {%> 
+                  <%= pin.tag %> <% } else { %> 
+                    <%= 'Visit' %> 
+                    <% } %>
+              </a>
+              <button id="copy-button" class="btn"                 ,
+                    data-bs-toggle="tooltip"
+                    data-bs-title="<%= pin.link %>">
+                <i data-feather="copy"></i>
+              </button>
               <div class="mt-4">
                 <div class="btn-group">
                   <form action="/pins/interact/<%= pin.id %>" method="GET">
@@ -198,9 +209,29 @@
     </div>
 
     <%- include('partials/footer'); -%>
-
     <script>
       feather.replace();
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
+
+      const copyButton = document.querySelector('#copy-button');
+
+      copyButton.addEventListener('click', () => {
+        navigator.clipboard.writeText('<%= pin.link %>').then(
+          function () {
+            copyButton.innerHTML = '<i data-feather="check"></i>';
+            feather.replace();
+          },
+          function () {
+            copyButton.innerHTML = '<i data-feather="x"></i>';
+            feather.replace();
+          }
+        );
+      });
     </script>
   </body>
 </html>
