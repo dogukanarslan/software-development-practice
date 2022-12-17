@@ -17,7 +17,6 @@
                 <span data-feather="thumbs-up"></span>
                 <button
                   type="button"
-                  id="likes-count-button"
                   class="btn btn-link text-dark"
                   data-bs-toggle="modal"
                   data-bs-target="#likesModal"
@@ -29,7 +28,6 @@
                 <span data-feather="thumbs-down"></span>
                 <button
                   type="button"
-                  id="dislikes-count-button"
                   class="btn btn-link text-dark"
                   data-bs-toggle="modal"
                   data-bs-target="#dislikesModal"
@@ -42,30 +40,28 @@
               >
               <div class="mt-4">
                 <div class="btn-group">
-                  <button
-                    id="like-button"
-                    class="btn btn-outline-secondary <%= isLiked ? 'active' : '' %>"
-                    onclick="likePin()"
-                  >
-                    <div class="d-flex align-items-center">
-                      <i data-feather="thumbs-up"></i
-                      ><span id="like-count" class="ms-2"
-                        ><%= pin.liked_by.length %></span
-                      >
-                    </div>
-                  </button>
-                  <button
-                    id="dislike-button"
-                    class="btn btn-outline-secondary <%= isDisliked ? 'active' : '' %>"
-                    onclick="dislikePin()"
-                  >
-                    <div class="d-flex align-items-center">
-                      <i data-feather="thumbs-down"></i
-                      ><span id="dislike-count" class="ms-2"
-                        ><%= pin.disliked_by.length %></span
-                      >
-                    </div>
-                  </button>
+                  <form action="/pins/interact/<%= pin.id %>" method="GET">
+                    <button
+                      name="interact"
+                      value="like"
+                      class="btn btn-outline-secondary <%= isLiked ? 'active' : '' %>"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i data-feather="thumbs-up"></i
+                        ><span class="ms-2"><%= pin.liked_by.length %></span>
+                      </div>
+                    </button>
+                    <button
+                      name="interact"
+                      value="dislike"
+                      class="btn btn-outline-secondary <%= isDisliked ? 'active' : '' %>"
+                    >
+                      <div class="d-flex align-items-center">
+                        <i data-feather="thumbs-down"></i
+                        ><span class="ms-2"><%= pin.disliked_by.length %></span>
+                      </div>
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -92,7 +88,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <ul id="liked-users-list" class="list-group">
+            <ul class="list-group">
               <% liked_users.forEach((user) => { %>
               <li class="list-group-item">
                 <%= user.name %> <%= user.surname %>
@@ -131,7 +127,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <ul id="disliked-users-list" class="list-group">
+            <ul class="list-group">
               <% disliked_users.forEach((user) => { %>
               <li class="list-group-item">
                 <%= user.name %> <%= user.surname %>
@@ -156,97 +152,6 @@
 
     <script>
       feather.replace();
-      const pinId = '<%- pin.id %>';
-      const likeButton = document.querySelector('#like-button');
-      const likeCount = document.querySelector('#like-count');
-      const likesCountButton = document.querySelector('#likes-count-button');
-      const dislikeButton = document.querySelector('#dislike-button');
-      const dislikeCount = document.querySelector('#dislike-count');
-      const dislikesCountButton = document.querySelector(
-        '#dislikes-count-button'
-      );
-      const likedUsersList = document.querySelector('#liked-users-list');
-      const dislikedUsersList = document.querySelector('#disliked-users-list');
-
-      const likePin = async (field) => {
-        const res = await (
-          await fetch('/pins/like', {
-            method: 'POST',
-            body: JSON.stringify({ pinId }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-        ).json();
-
-        if (res) {
-          let likedUsersHtml = '';
-          let dislikedUsersHtml = '';
-
-          let likedUsers = res.liked_users;
-          let dislikedUsers = res.disliked_users;
-
-          likedUsers.forEach((likedUser) => {
-            likedUsersHtml += `<li class="list-group-item">${likedUser.name} ${likedUser.surname}</li>`;
-          });
-          dislikedUsers.forEach((dislikedUser) => {
-            dislikedUsersHtml += `<li class="list-group-item">${dislikedUser.name} ${dislikedUser.surname}</li>`;
-          });
-          dislikedUsersList.innerHTML = dislikedUsersHtml;
-          likedUsersList.innerHTML = likedUsersHtml;
-
-          likeCount.textContent = res.liked_by.length;
-          likesCountButton.textContent = res.liked_by.length + ' likes';
-          likeButton.classList.toggle('active');
-
-          if (res.disliked_by.length != dislikeCount.textContent) {
-            dislikeCount.textContent = res.disliked_by.length;
-            dislikesCountButton.textContent =
-              res.disliked_by.length + ' dislikes';
-            dislikeButton.classList.remove('active');
-          }
-        }
-      };
-
-      const dislikePin = async (field) => {
-        const res = await (
-          await fetch('/pins/dislike', {
-            method: 'POST',
-            body: JSON.stringify({ pinId }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-        ).json();
-
-        if (res) {
-          let likedUsersHtml = '';
-          let dislikedUsersHtml = '';
-
-          let likedUsers = res.liked_users;
-          let dislikedUsers = res.disliked_users;
-
-          likedUsers.forEach((likedUser) => {
-            likedUsersHtml += `<li class="list-group-item">${likedUser.name} ${likedUser.surname}</li>`;
-          });
-          dislikedUsers.forEach((dislikedUser) => {
-            dislikedUsersHtml += `<li class="list-group-item">${dislikedUser.name} ${dislikedUser.surname}</li>`;
-          });
-          dislikedUsersList.innerHTML = dislikedUsersHtml;
-          likedUsersList.innerHTML = likedUsersHtml;
-
-          dislikeCount.textContent = res.disliked_by.length;
-          dislikesCountButton.textContent =
-            res.disliked_by.length + ' dislikes';
-          dislikeButton.classList.toggle('active');
-
-          if (res.liked_by.length != likeCount.textContent) {
-            likeCount.textContent = res.liked_by.length;
-            likesCountButton.textContent = res.liked_by.length + ' likes';
-            likeButton.classList.remove('active');
-          }
-        }
-      };
     </script>
   </body>
 </html>
