@@ -20,6 +20,7 @@ const pinSchema = new mongoose.Schema({
   },
   liked_by: [String],
   disliked_by: [String],
+  saved_by: [String],
 });
 
 const Pin = mongoose.model('pin', pinSchema);

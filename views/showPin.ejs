@@ -11,7 +11,20 @@
         <div class="col-md-10 ms-auto">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"><%= pin.title %></h5>
+              <h5
+                class="card-title d-flex justify-content-between align-items-center"
+              >
+                <span> <%= pin.title %> </span>
+                <a href="/pins/save/<%= pin.id %>" class="btn btn-secondary">
+                  <div class="d-flex align-items-center">
+                    <% if (isSaved) { %>
+                    <i data-feather="x"></i><span class="ms-2">Unsave</span>
+                    <% } else { %>
+                    <i data-feather="save"></i><span class="ms-2">Save</span>
+                    <% } %>
+                  </div>
+                </a>
+              </h5>
               <p class="card-text"><%= pin.description %></p>
               <p class="card-text">
                 <span data-feather="thumbs-up"></span>
@@ -35,32 +48,47 @@
                   <%= pin.disliked_by.length %> dislikes
                 </button>
               </p>
+              <p class="card-text">
+                <span data-feather="save"></span>
+                <button
+                  type="button"
+                  class="btn btn-link text-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#savesModal"
+                >
+                  <%= pin.saved_by.length %> saves
+                </button>
+              </p>
               <a href="<%= pin.link %>" target="_blank" class="card-link"
                 ><%= pin.link %></a
               >
               <div class="mt-4">
                 <div class="btn-group">
                   <form action="/pins/interact/<%= pin.id %>" method="GET">
-                    <button
-                      name="interact"
-                      value="like"
-                      class="btn btn-outline-secondary <%= isLiked ? 'active' : '' %>"
-                    >
-                      <div class="d-flex align-items-center">
-                        <i data-feather="thumbs-up"></i
-                        ><span class="ms-2"><%= pin.liked_by.length %></span>
-                      </div>
-                    </button>
-                    <button
-                      name="interact"
-                      value="dislike"
-                      class="btn btn-outline-secondary <%= isDisliked ? 'active' : '' %>"
-                    >
-                      <div class="d-flex align-items-center">
-                        <i data-feather="thumbs-down"></i
-                        ><span class="ms-2"><%= pin.disliked_by.length %></span>
-                      </div>
-                    </button>
+                    <div class="btn-group">
+                      <button
+                        name="interact"
+                        value="like"
+                        class="btn btn-outline-secondary <%= isLiked ? 'active' : '' %>"
+                      >
+                        <div class="d-flex align-items-center">
+                          <i data-feather="thumbs-up"></i
+                          ><span class="ms-2"><%= pin.liked_by.length %></span>
+                        </div>
+                      </button>
+                      <button
+                        name="interact"
+                        value="dislike"
+                        class="btn btn-outline-secondary <%= isDisliked ? 'active' : '' %>"
+                      >
+                        <div class="d-flex align-items-center">
+                          <i data-feather="thumbs-down"></i
+                          ><span class="ms-2"
+                            ><%= pin.disliked_by.length %></span
+                          >
+                        </div>
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -69,17 +97,11 @@
         </div>
       </div>
     </div>
-    <div
-      class="modal fade"
-      id="likesModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="likesModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Likes</h4>
+            <h4 class="modal-title">Liked Users</h4>
             <button
               type="button"
               class="btn-close"
@@ -108,17 +130,11 @@
         </div>
       </div>
     </div>
-    <div
-      class="modal fade"
-      id="dislikesModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="dislikesModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Dislikes</h4>
+            <h4 class="modal-title">Disliked Users</h4>
             <button
               type="button"
               class="btn-close"
@@ -129,6 +145,39 @@
           <div class="modal-body">
             <ul class="list-group">
               <% disliked_users.forEach((user) => { %>
+              <li class="list-group-item">
+                <%= user.name %> <%= user.surname %>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="savesModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Saved Users</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group">
+              <% saved_users.forEach((user) => { %>
               <li class="list-group-item">
                 <%= user.name %> <%= user.surname %>
               </li>

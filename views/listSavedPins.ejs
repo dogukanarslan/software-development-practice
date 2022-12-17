@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('partials/head', {title: 'Your pins'}) %>
+  <%- include('partials/head', {title: 'Saved pins'}) %>
   <body>
     <%- include('partials/navbar') %>
     <div class="container-fluid">
@@ -9,16 +9,15 @@
           <%- include('partials/sidebar', {pathname}) %>
         </div>
         <div class="col-md-10 ms-auto">
-          <h4>Your Pins</h4>
-          
-          <% if (pins.length > 0) { %> 
+          <h4>Saved Pins</h4>
+          <% if (pins.length > 0) { %>
             <%- include('partials/searchForm', {url: '/pins'}) %>
             <%- include('partials/table',
           {data:{header: ['Title', 'Description', 'Creator', 'Total Likes',
           'Total Dislikes', 'Total Saves', 'Link'], body: pins}}); %> <% } else { %>
           <p>
-            You don't have any pin yet.
-            <a href="/pins/create">Create a new pin</a>
+            You don't have any saved pin yet.
+            <a href="/">List all pins</a>
           </p>
           <% } %>
         </div>
