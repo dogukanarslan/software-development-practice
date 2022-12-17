@@ -50,85 +50,55 @@ module.exports.show_get = async (req, res) => {
   });
 };
 
-module.exports.like_pin = async (req, res) => {
-  const { pinId, field } = req.body;
+module.exports.interact_pin = async (req, res) => {
+  const { pinId } = req.params;
+  const interact = req.query.interact;
+
   const token = req.cookies.authentication;
   const pin = await Pin.findOne({ _id: pinId });
 
   if (pin) {
     const decodedToken = decodeToken(token);
-    if (pin.liked_by.some((userId) => userId === decodedToken.id)) {
-      pin.liked_by = pin.liked_by.filter(
-        (userId) => userId !== decodedToken.id
-      );
-    } else {
-      pin.liked_by.push(decodedToken.id);
+
+    if (interact === 'like') {
+      if (pin.liked_by.some((userId) => userId === decodedToken.id)) {
+        pin.liked_by = pin.liked_by.filter(
+          (userId) => userId !== decodedToken.id
+        );
+      } else {
+        pin.liked_by.push(decodedToken.id);
+      }
+    }
+
+    if (interact === 'dislike') {
+      if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
+        pin.disliked_by = pin.liked_by.filter(
+          (userId) => userId !== decodedToken.id
+        );
+      } else {
+        pin.disliked_by.push(decodedToken.id);
+      }
     }
 
     // Check if post is currently disliked
-    if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
-      pin.disliked_by = pin.disliked_by.filter(
-        (userId) => userId !== decodedToken.id
-      );
+    if (interact === 'like') {
+      if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
+        pin.disliked_by = pin.disliked_by.filter(
+          (userId) => userId !== decodedToken.id
+        );
+      }
     }
 
-    const likedUsers = await User.find({
-      _id: { $in: pin.liked_by },
-    });
-
-    const dislikedUsers = await User.find({
-      _id: { $in: pin.disliked_by },
-    });
+    if (interact === 'dislike') {
+      if (pin.liked_by.some((userId) => userId === decodedToken.id)) {
+        pin.liked_by = pin.liked_by.filter(
+          (userId) => userId !== decodedToken.id
+        );
+      }
+    }
 
     pin.save();
-    res.status(200).json({
-      liked_by: pin.liked_by,
-      disliked_by: pin.disliked_by,
-      liked_users: likedUsers,
-      disliked_users: dislikedUsers,
-    });
-  } else {
-    res.status(400).send('Pin does not exist');
-  }
-};
-
-module.exports.dislike_pin = async (req, res) => {
-  const { pinId } = req.body;
-  const token = req.cookies.authentication;
-  const pin = await Pin.findOne({ _id: pinId });
-
-  if (pin) {
-    const decodedToken = decodeToken(token);
-    if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
-      pin.disliked_by = pin.disliked_by.filter(
-        (userId) => userId !== decodedToken.id
-      );
-    } else {
-      pin.disliked_by.push(decodedToken.id);
-    }
-
-    // Check if post is currently liked
-    if (pin.disliked_by.some((userId) => userId === decodedToken.id)) {
-      pin.liked_by = pin.liked_by.filter(
-        (userId) => userId !== decodedToken.id
-      );
-    }
-
-    const likedUsers = await User.find({
-      _id: { $in: pin.liked_by },
-    });
-
-    const dislikedUsers = await User.find({
-      _id: { $in: pin.disliked_by },
-    });
-
-    pin.save();
-    res.status(200).json({
-      disliked_by: pin.disliked_by,
-      liked_by: pin.liked_by,
-      liked_users: likedUsers,
-      disliked_users: dislikedUsers,
-    });
+    res.redirect(`/pins/${pin.id}`);
   } else {
     res.status(400).send('Pin does not exist');
   }
