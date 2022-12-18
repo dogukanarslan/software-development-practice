@@ -15,6 +15,11 @@
       <td><%= data.liked_by.length %></td>
       <td><%= data.disliked_by.length %></td>
       <td><%= data.saved_by.length %></td>
+      <td><%= new Intl.DateTimeFormat('en', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      }).format(data.created_at); %></td>
       <td>
         <a href="/pins/<%= data._id %>" class="btn btn-sm btn-primary">Visit</a>
       </td>

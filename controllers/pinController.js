@@ -14,7 +14,8 @@ module.exports.list_get = async (req, res) => {
     .equals(decodedToken.id)
     .where('title')
     .where('description')
-    .regex(new RegExp(searchData, 'i'));
+    .regex(new RegExp(searchData, 'i'))
+    .sort({ created_at: -1 });
 
   res.render('listPins', {
     pins,
@@ -34,7 +35,8 @@ module.exports.list_saved_get = async (req, res) => {
     .in(decodedToken.id)
     .where('title')
     .where('description')
-    .regex(new RegExp(searchData, 'i'));
+    .regex(new RegExp(searchData, 'i'))
+    .sort({ created_at: -1 });
 
   res.render('listSavedPins', {
     pins,

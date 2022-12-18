@@ -14,7 +14,7 @@
             <%- include('partials/searchForm', {url: '/pins'}) %>
             <%- include('partials/table',
           {data:{header: ['Title', 'Description', 'Creator', 'Total Likes',
-          'Total Dislikes', 'Total Saves', 'Link'], body: pins}}); %> <% } else { %>
+          'Total Dislikes', 'Total Saves', 'Created At', 'Link'], body: pins}}); %> <% } else { %>
           <p>
             You don't have any saved pin yet.
             <a href="/">List all pins</a>
