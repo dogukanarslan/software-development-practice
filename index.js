@@ -35,7 +35,8 @@ app.get('/', requireAuth, async (req, res) => {
   const pins = await Pin.find()
     .where('title')
     .where('description')
-    .regex(new RegExp(searchData, 'i'));
+    .regex(new RegExp(searchData, 'i'))
+    .sort({ created_at: -1 });
 
   res.render('home', { pins, pathname: req.path });
 });

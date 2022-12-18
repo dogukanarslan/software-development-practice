@@ -59,6 +59,19 @@
                   <%= pin.saved_by.length %> saves
                 </button>
               </p>
+              <p class="card-text">
+                <span data-feather="calendar"></span>
+                <span>
+                  <%= new Intl.DateTimeFormat('en', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric', 
+                    minute: 'numeric',
+                    hour12: false
+                  }).format(pin.created_at); %>
+                </span>
+              </p>
               <a
                 href="<%= pin.link %>"
                 target="_blank"
