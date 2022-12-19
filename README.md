@@ -1,4 +1,4 @@
-# Software Development Practice
+# Pinner
 
 This is an application which you can save your resources.  
 Preview link: http://ec2-18-117-131-66.us-east-2.compute.amazonaws.com/
@@ -10,8 +10,8 @@ Welcome, this is an Express application that you can use to save any resources a
 - Clone repository
 - Install nodemon globally for easier development by `npm install -g nodemon`
 - Change directory to project path
-- Add USER, PASSWORD, and DB information to .env file
-- Run index script by running `nodemon index`
+- Add MONGODB_URI to .env file
+- Run `npm run dev` to transpile scss files and run server
 
 ## Technologies
 - Express.js
@@ -21,5 +21,8 @@ Welcome, this is an Express application that you can use to save any resources a
 - Jest
 
 ### Screenshots
-![pinner-signup](https://user-images.githubusercontent.com/52973879/200196415-4eb36f9a-94be-438e-9349-d43e6474de65.png)
-![pinner-login](https://user-images.githubusercontent.com/52973879/200196413-6eeaefe1-f807-4a74-92e6-973a1d033afa.png)
+![sign-up-page](https://user-images.githubusercontent.com/52973879/208506057-64637b10-6366-4933-acc6-ff4935f12359.png)
+![login-page](https://user-images.githubusercontent.com/52973879/208506084-c428d6da-6c35-4c4c-a734-343fa1c591a3.png)
+![homepage](https://user-images.githubusercontent.com/52973879/208506102-fa716a70-b54c-4c55-874c-ceeea6001650.png)
+![create-pin-page](https://user-images.githubusercontent.com/52973879/208506122-a5e874bb-d3dd-415a-9ff5-856eed0cc79b.png)
+![pin-detail-page](https://user-images.githubusercontent.com/52973879/208506132-d7eeb0d4-6243-4f59-8d1e-6544268494cc.png)
