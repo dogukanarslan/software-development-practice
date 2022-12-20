@@ -31,9 +31,9 @@
             </div>
 
             <div class="mb-3">
-              <label for="tag" class="form-label">Tag</label>
-              <input type="text" name="tag" class="form-control" />
-              <div class="tag error"></div>
+              <label for="label" class="form-label">Label</label>
+              <input type="text" name="label" class="form-control" />
+              <div class="label error"></div>
             </div>
 
             <button class="btn btn-primary">Create pin</button>
@@ -49,7 +49,7 @@
       const titleError = document.querySelector('.title.error');
       const descriptionError = document.querySelector('.description.error');
       const linkError = document.querySelector('.link.error');
-      const tagError = document.querySelector('.tag.error');
+      const labelError = document.querySelector('.label.error');
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -58,17 +58,17 @@
         titleError.textContent = '';
         descriptionError.textContent = '';
         linkError.textContent = '';
-        tagError.textContent = '';
+        labelError.textContent = '';
 
         const title = form.title.value;
         const description = form.description.value;
         const link = form.link.value;
-        const tag = form.tag.value;
+        const label = form.label.value;
 
         try {
           const res = await fetch('/pins/create', {
             method: 'POST',
-            body: JSON.stringify({ title, description, link, tag }),
+            body: JSON.stringify({ title, description, link, label }),
             headers: {
               'Content-Type': 'application/json',
             },
@@ -80,7 +80,7 @@
             titleError.textContent = data.errors.title;
             descriptionError.textContent = data.errors.description;
             linkError.textContent = data.errors.link;
-            tagError.textContent = data.errors.tag;
+            labelError.textContent = data.errors.label;
           }
 
           if (data.pin) {

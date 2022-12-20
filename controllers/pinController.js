@@ -139,7 +139,7 @@ module.exports.create_get = (req, res) => {
 };
 
 module.exports.create_post = async (req, res) => {
-  const { title, description, link, tag } = req.body;
+  const { title, description, link, label } = req.body;
 
   const token = req.cookies.authentication;
   const decodedToken = decodeToken(token);
@@ -151,7 +151,7 @@ module.exports.create_post = async (req, res) => {
       title,
       description,
       link,
-      tag,
+      label,
       user_id: user._id,
       creator: user.name + ' ' + user.surname,
     });
