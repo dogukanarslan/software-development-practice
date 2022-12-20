@@ -50,6 +50,8 @@ module.exports.show_get = async (req, res) => {
 
   const decodedToken = decodeToken(token);
 
+  const user = await User.findOne({ _id: pin.user_id });
+
   const likedUsers = await User.find({
     _id: { $in: pin.liked_by },
   });
@@ -70,6 +72,7 @@ module.exports.show_get = async (req, res) => {
 
   res.render('showPin', {
     pin,
+    user,
     liked_users: likedUsers,
     disliked_users: dislikedUsers,
     saved_users: savedUsers,
