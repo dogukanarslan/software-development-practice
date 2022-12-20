@@ -72,6 +72,12 @@
                   }).format(pin.created_at); %>
                 </span>
               </p>
+              <p class="card-text">
+                <span data-feather="user"></span>
+                <span>
+                  <%= `${user.name} ${user.surname}` %>
+                </span>
+              </p>
               <a
                 href="<%= pin.link %>"
                 target="_blank"
