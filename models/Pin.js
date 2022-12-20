@@ -13,7 +13,7 @@ const pinSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Link is required.'],
     },
-    tag: {
+    label: {
       type: String,
     },
     creator: {
