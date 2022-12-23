@@ -21,6 +21,12 @@ const userSchema = new mongoose.Schema(
     surname: {
       type: String,
     },
+    following: {
+      type: [String],
+    },
+    followed_by: {
+      type: [String],
+    },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
