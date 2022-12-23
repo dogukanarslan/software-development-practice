@@ -1,28 +1,23 @@
 <table class="table table-hover table-striped">
   <thead>
     <tr>
-      <% data.header.forEach(title => { %>
-      <th scope="col"><%= title %></th>
+      <% columns.forEach(column => { %>
+      <th scope="col"><%= column.heading %></th>
       <% }) %>
     </tr>
   </thead>
   <tbody>
-    <% data.body.forEach(data => { %>
+    <% data.forEach(item => { %>
     <tr>
-      <td><%= data.title %></td>
-      <td><%= data.description %></td>
-      <td><%= data.creator %></td>
-      <td><%= data.liked_by.length %></td>
-      <td><%= data.disliked_by.length %></td>
-      <td><%= data.saved_by.length %></td>
-      <td><%= new Intl.DateTimeFormat('en', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }).format(data.created_at); %></td>
-      <td>
-        <a href="/pins/<%= data._id %>" class="btn btn-sm btn-primary">Visit</a>
-      </td>
+      <% columns.forEach(column => { %>
+        <td>
+          <% if (column.url) { %>
+            <a href="<%= `${column.url}/${item.link}` %>" class="btn btn-sm btn-primary">Visit</a>
+          <% } else { %>
+            <%= item[column.value] %>
+          <% } %>
+        </td>
+      <% }) %>
     </tr>
     <% }) %>
   </tbody>
