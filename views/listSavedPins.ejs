@@ -13,8 +13,28 @@
           <% if (pins.length > 0) { %>
             <%- include('partials/searchForm', {url: '/pins'}) %>
             <%- include('partials/table',
-          {data:{header: ['Title', 'Description', 'Creator', 'Total Likes',
-          'Total Dislikes', 'Total Saves', 'Created At', 'Link'], body: pins}}); %> <% } else { %>
+          {
+            columns: [
+              {heading: 'Title', value: 'title'},
+              {heading: 'Description', value: 'description'},
+              {heading: 'Creator', value: 'creator'},
+              {heading: 'Total Likes', value: 'total_likes'},
+              {heading: 'Total Dislikes', value: 'total_dislikes'},
+              {heading: 'Total Saves', value: 'total_saves'},
+              {heading: 'Created At', value: 'created_at'},
+              {heading: 'Link', url: '/pins'}
+            ],
+            data: pins.map(pin => ({
+                title: pin.title,
+                description: pin.description,
+                creator: pin.creator,
+                total_likes: pin.liked_by.length,
+                total_dislikes: pin.disliked_by.length,
+                total_saves: pin.saved_by.length,
+                created_at: new Intl.DateTimeFormat('en', { year: 'numeric',month: 'long',day: 'numeric',}).format(pin.created_at),
+                link: pin._id
+                }))
+              }); %> <% } else { %>
           <p>
             You don't have any saved pin yet.
             <a href="/">List all pins</a>
