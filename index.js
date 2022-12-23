@@ -1,9 +1,9 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const Pin = require('./models/Pin');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 const pinRoutes = require('./routes/pinRoutes');
 const cookieParser = require('cookie-parser');
 const { checkUser, requireAuth } = require('./middlewares/authMiddleware');
@@ -42,6 +42,7 @@ app.get('/', requireAuth, async (req, res) => {
 });
 
 app.use(authRoutes);
+app.use(userRoutes);
 app.use(pinRoutes);
 
 module.exports.app = app;

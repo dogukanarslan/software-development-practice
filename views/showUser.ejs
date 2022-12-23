@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head', {title: 'User detail'}) %>
+  <body>
+    <%- include('partials/navbar'); %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-light sidebar">
+          <%- include('partials/sidebar') %>
+        </div>
+        <div class="col-md-10 ms-auto">
+          <div class="card">
+            <div class="card-body">
+              <h5
+                class="card-title d-flex justify-content-between align-items-center"
+              >
+                <span> <%= user.name %> <%=user.surname %> </span>
+                <a href="/users/follow/<%= user.id %>" class="btn btn-secondary">
+                  <div class="d-flex align-items-center">
+                    <% if (isFollowed) { %>
+                    <i data-feather="x"></i><span class="ms-2">Unfollow</span>
+                    <% } else { %>
+                    <i data-feather="plus"></i><span class="ms-2">Follow</span>
+                    <% } %>
+                  </div>
+                </a>
+              </h5>
+              <p class="card-text"><%= user.email %></p>
+              <p class="card-text">
+                <span data-feather="plus"></span>
+                <button
+                  type="button"
+                  class="btn btn-link text-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#followedByModal"
+                >
+                  <%= followed?.length %> followers
+                </button>
+              </p>
+              <p class="card-text">
+                <span data-feather="plus"></span>
+                <button
+                  type="button"
+                  class="btn btn-link text-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#followingModal"
+                >
+                  <%= following.length %> following
+                </button>
+              </p>
+              <p class="card-text">
+                <span data-feather="calendar"></span>
+                <span>
+                  <%= new Intl.DateTimeFormat('en', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric', 
+                    minute: 'numeric',
+                    hour12: false
+                  }).format(user.created_at); %>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="followingModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Following</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group">
+              <% following.forEach((user) => { %>
+              <li class="list-group-item">
+                <%= user.name %> <%= user.surname %>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="followedByModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Followers</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group">
+              <% followed.forEach((user) => { %>
+              <li class="list-group-item">
+                <%= user.name %> <%= user.surname %>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/footer'); -%>
+    <script>
+      feather.replace();
+    </script>
+  </body>
+</html>
