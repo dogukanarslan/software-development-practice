@@ -2,11 +2,13 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const Pin = require('./models/Pin');
+const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const pinRoutes = require('./routes/pinRoutes');
 const cookieParser = require('cookie-parser');
 const { checkUser, requireAuth } = require('./middlewares/authMiddleware');
+const { decodeToken } = require('./utils');
 
 const app = express();
 
@@ -30,15 +32,28 @@ app.set('view engine', 'ejs');
 // Routes
 app.get('*', checkUser);
 app.get('/', requireAuth, async (req, res) => {
-  const searchData = req.query['search-data'];
+  const token = req.cookies.authentication;
+  const decodedToken = decodeToken(token);
 
-  const pins = await Pin.find()
+  const searchData = req.query['search-data'];
+  const type = req.query['type'] || 'all';
+
+  let pins = await Pin.find()
     .where('title')
     .where('description')
     .regex(new RegExp(searchData, 'i'))
     .sort({ created_at: -1 });
 
-  res.render('home', { pins, pathname: req.path });
+  if (type === 'following') {
+    const user = await User.findOne({ _id: decodedToken.id });
+    pins = pins.filter((pin) => user.following.includes(pin.user_id));
+  }
+
+  res.render('home', {
+    pins,
+    type,
+    pathname: req.path,
+  });
 });
 
 app.use(authRoutes);
