@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head', {title: 'Your todos'}) %>
+  <body>
+    <%- include('partials/navbar') %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-light sidebar">
+          <%- include('partials/sidebar', {pathname}) %>
+        </div>
+        <div class="col-md-10 ms-auto">
+          <h4>Your Todos</h4>
+          <%- include('partials/searchForm', {url: '/todos'}) %>
+          <% if (todos.length > 0) { %> 
+            <%- include('partials/table', {
+            columns: [
+              {heading: 'Title', value: 'title'},
+              {heading: 'Description', value: 'description'},
+              {heading: 'Pin Title', value: 'pin_title'},
+              {heading: 'Created At', value: 'created_at'},
+              {heading: 'Link', url: '/todos'}
+            ],
+            data: todos.map(todo => ({
+                title: todo.title,
+                description: todo.description,
+                pin_title: todo.pin_title,
+                created_at: new Intl.DateTimeFormat('en', { year: 'numeric',month: 'long',day: 'numeric',}).format(todo.created_at),
+                link: todo._id
+                }))
+              }); %> 
+            <% } else { %>
+          <p>
+            You don't have any todo yet.
+          </p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/footer'); %>
+    <script>
+      feather.replace();
+    </script>
+  </body>
+</html>

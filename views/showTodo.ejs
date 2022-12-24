@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head', {title: 'Todo detail'}) %>
+  <body>
+    <%- include('partials/navbar'); %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2 bg-light sidebar">
+          <%- include('partials/sidebar') %>
+        </div>
+        <div class="col-md-10 ms-auto">
+          <div class="card">
+            <div class="card-body">
+              <h5
+                class="card-title d-flex justify-content-between align-items-center"
+              >
+                <span> <%= todo.title %> </span>
+                <button data-bs-toggle="modal" data-bs-target="#deleteTodo" class="btn btn-danger">
+                    <i data-feather="x"></i><span class="ms-2">Delete</span>
+                </a>
+              </h5>
+              <p class="card-text"><%= todo.description %></p>
+              <p class="card-text">
+                <a href="<%= todo.link %>" target="_blank" class="btn btn-secondary">Visit</a>
+                <button id="copy-button" class="btn" , data-bs-toggle="tooltip" data-bs-title="<%= todo.link %>">
+                  <i data-feather="copy"></i>
+                </button>
+              </p>
+              <p class="card-text">
+                <span data-feather="calendar"></span>
+                <span>
+                  <%= new Intl.DateTimeFormat('en', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric', 
+                    minute: 'numeric',
+                    hour12: false
+                  }).format(todo.created_at); %>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="deleteTodo">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Are you sure?</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            This todo will be deleted.
+          </div>
+          <div class="modal-footer">
+            <form action="/todos/delete/<%= todo.id%>" method="GET">
+                <button
+                class="btn btn-danger"
+              >
+                Delete
+              </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/footer'); -%>
+    <script>
+      feather.replace();
+      
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
+
+      const copyButton = document.querySelector('#copy-button');
+
+      copyButton.addEventListener('click', () => {
+        navigator.clipboard.writeText('<%= todo.link %>').then(
+          function () {
+            copyButton.innerHTML = '<i data-feather="check"></i>';
+            feather.replace();
+          },
+          function () {
+            copyButton.innerHTML = '<i data-feather="x"></i>';
+            feather.replace();
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

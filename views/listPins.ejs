@@ -10,8 +10,8 @@
         </div>
         <div class="col-md-10 ms-auto">
           <h4>Your Pins</h4>
+          <%- include('partials/searchForm', {url: '/pins'}) %>
           <% if (pins.length > 0) { %> 
-            <%- include('partials/searchForm', {url: '/pins'}) %>
             <%- include('partials/table', {
             columns: [
               {heading: 'Title', value: 'title'},
