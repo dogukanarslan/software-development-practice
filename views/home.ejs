@@ -12,6 +12,22 @@
           <h4>All Pins</h4>
           <%- include('partials/searchForm', {url: '/'}) %>
 
+          <div class="btn-group my-4">
+            <form action="/" method="GET">
+              <div class="btn-group">
+                </button>
+                <button name="type" value="all" class="btn btn-outline-secondary <%= type === 'all' ? 'active' : '' %>">
+                  <div class="d-flex align-items-center">
+                    All
+                  </div>
+                </button>
+                <button name="type" value="following"
+                  class="btn btn-outline-secondary <%= type === 'following' ? 'active' : '' %>">
+                  Following
+              </div>
+            </form>
+          </div>
+
           <%- include('partials/table', {
             columns: [
               {heading: 'Title', value: 'title'},
