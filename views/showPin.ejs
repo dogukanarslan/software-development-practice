@@ -15,15 +15,23 @@
                 class="card-title d-flex justify-content-between align-items-center"
               >
                 <span> <%= pin.title %> </span>
-                <a href="/pins/save/<%= pin.id %>" class="btn btn-secondary">
-                  <div class="d-flex align-items-center">
-                    <% if (isSaved) { %>
-                    <i data-feather="x"></i><span class="ms-2">Unsave</span>
-                    <% } else { %>
-                    <i data-feather="save"></i><span class="ms-2">Save</span>
-                    <% } %>
-                  </div>
-                </a>
+                <div>
+                  <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#todoModal">
+                    <div class="d-flex align-items-center">
+                      <i data-feather="list"></i><span class="ms-2">Add todo</span>
+                    </div>
+                  </button>
+                  <a href="/pins/save/<%= pin.id %>" class="btn btn-secondary">
+                    <div class="d-flex align-items-center">
+                      <% if (isSaved) { %>
+                      <i data-feather="x"></i><span class="ms-2">Unsave</span>
+                      <% } else { %>
+                      <i data-feather="save"></i><span class="ms-2">Save</span>
+                      <% } %>
+                    </div>
+                  </a>
+                </div>
+
               </h5>
               <p class="card-text"><%= pin.description %></p>
               <p class="card-text">
@@ -222,6 +230,44 @@
             >
               Close
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="todoModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add todo</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/todos/create" method="POST">
+              <div class="mb-3">
+                <label for="title" class="form-label">Title*</label>
+                <input type="text" name="title" class="form-control" required />
+                <div class="title error"></div>
+              </div>
+          
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" name="description" class="form-control" />
+                <div class="description error"></div>
+              </div>
+              
+              <input type="hidden" name="pinId" value="<%= pin.id %>">
+              <input type="hidden" name="pinTitle" value="<%= pin.title %>">
+              <input type="hidden" name="link" value="<%= pin.link %>">
+
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary">Create todo</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

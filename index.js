@@ -6,6 +6,7 @@ const User = require('./models/User');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const pinRoutes = require('./routes/pinRoutes');
+const todoRoutes = require('./routes/todoRoutes');
 const cookieParser = require('cookie-parser');
 const { checkUser, requireAuth } = require('./middlewares/authMiddleware');
 const { decodeToken } = require('./utils');
@@ -15,6 +16,7 @@ const app = express();
 // Middleware
 app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
   '/js',
@@ -59,5 +61,6 @@ app.get('/', requireAuth, async (req, res) => {
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(pinRoutes);
+app.use(todoRoutes);
 
 module.exports.app = app;
