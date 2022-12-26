@@ -12,7 +12,7 @@
       <% columns.forEach(column => { %>
         <td>
           <% if (column.url) { %>
-            <a href="<%= `${column.url}/${item.link}` %>" class="btn btn-sm btn-primary">Visit</a>
+            <a href="<%= `${column.url}/${item.link}` %>" class="btn btn-sm btn-primary d-inline-flex align-items-center"><span data-feather="eye" class="me-2"></span>View</a>
           <% } else { %>
             <%= item[column.value] %>
           <% } %>
