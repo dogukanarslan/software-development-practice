@@ -15,8 +15,8 @@
                 class="card-title d-flex justify-content-between align-items-center"
               >
                 <span> <%= todo.title %> </span>
-                <button data-bs-toggle="modal" data-bs-target="#deleteTodo" class="btn btn-danger">
-                    <i data-feather="x"></i><span class="ms-2">Delete</span>
+                <button data-bs-toggle="modal" data-bs-target="#deleteTodo" class="btn btn-danger d-flex align-items-center">
+                  <span data-feather="x" class="me-2"></span>Delete
                 </a>
               </h5>
               <p class="card-text"><%= todo.description %></p>

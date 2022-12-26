@@ -26,7 +26,6 @@ module.exports.list_get = async (req, res) => {
 module.exports.list_saved_get = async (req, res) => {
   const token = req.cookies.authentication;
   const decodedToken = decodeToken(token);
-  console.log(decodedToken.id);
 
   const searchData = req.query['search-data'];
 
