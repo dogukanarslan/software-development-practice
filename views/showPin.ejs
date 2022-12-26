@@ -16,11 +16,13 @@
               >
                 <span> <%= pin.title %> </span>
                 <div>
+                  <% if (isOwner) { %>
                   <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editModal">
                     <div class="d-flex align-items-center">
                       <i data-feather="edit"></i><span class="ms-2">Edit pin</span>
                     </div>
                   </button>
+                  <% } %>
                   <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#todoModal">
                     <div class="d-flex align-items-center">
                       <i data-feather="list"></i><span class="ms-2">Add todo</span>

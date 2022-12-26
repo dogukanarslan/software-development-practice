@@ -78,6 +78,7 @@ module.exports.show_get = async (req, res) => {
     isLiked,
     isDisliked,
     isSaved,
+    isOwner: decodedToken.id === pin.user_id,
     pathname: req.url,
   });
 };
@@ -174,17 +175,32 @@ module.exports.edit_put = async (req, res) => {
   const { title, description, link } = req.body;
   const { pinId } = req.params;
 
-  try {
-    const pin = await Pin.findOneAndUpdate(
-      { _id: pinId },
-      {
-        title,
-        description,
-        link,
-      }
-    );
+  const token = req.cookies.authentication;
+  const decodedToken = decodeToken(token);
 
-    res.status(200).json({ pin: pin });
+  const pin = await Pin.findOne({ _id: pinId });
+
+  if (pin.user_id !== decodedToken.id) {
+    res.status(400).json({
+      message: 'You cannot update a pin which does not belong to you.',
+    });
+  }
+
+  try {
+    if (title) {
+      pin.title = title;
+    }
+
+    if (description) {
+      pin.description = description;
+    }
+
+    if (link) {
+      pin.link = link;
+    }
+
+    pin.save();
+    res.status(200).json({ pin: pin.id });
   } catch (err) {
     let errors = { title: '', description: '', link: '' };
 
