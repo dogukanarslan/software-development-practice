@@ -24,7 +24,7 @@
                 title: todo.title,
                 description: todo.description,
                 pin_title: todo.pin_title,
-                created_at: new Intl.DateTimeFormat('en', { year: 'numeric',month: 'long',day: 'numeric',}).format(todo.created_at),
+                created_at: new Intl.DateTimeFormat('en', { year: 'numeric',month: 'long',day: 'numeric', timeZone: 'Turkey'}).format(todo.created_at),
                 link: todo._id
                 }))
               }); %> 
