@@ -170,6 +170,32 @@ module.exports.create_post = async (req, res) => {
   }
 };
 
+module.exports.edit_put = async (req, res) => {
+  const { title, description, link } = req.body;
+  const { pinId } = req.params;
+
+  try {
+    const pin = await Pin.findOneAndUpdate(
+      { _id: pinId },
+      {
+        title,
+        description,
+        link,
+      }
+    );
+
+    res.status(200).json({ pin: pin });
+  } catch (err) {
+    let errors = { title: '', description: '', link: '' };
+
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+
+    res.status(400).json({ errors });
+  }
+};
+
 module.exports.save_pin = async (req, res) => {
   const { pinId } = req.params;
 
