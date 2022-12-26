@@ -31,7 +31,7 @@
                 total_likes: pin.liked_by.length,
                 total_dislikes: pin.disliked_by.length,
                 total_saves: pin.saved_by.length,
-                created_at: new Intl.DateTimeFormat('en', { year: 'numeric',month: 'long',day: 'numeric',}).format(pin.created_at),
+                created_at: new Intl.DateTimeFormat('en', { year: 'numeric',month: 'long',day: 'numeric', timeZone: 'Turkey'}).format(pin.created_at),
                 link: pin._id
                 }))
               }); %> <% } else { %>
