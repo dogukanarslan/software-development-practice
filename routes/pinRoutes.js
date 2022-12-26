@@ -9,6 +9,8 @@ router.use(requireAuth);
 router.get('/pins/create', pinController.create_get);
 router.post('/pins/create', pinController.create_post);
 
+router.put('/pins/edit/:pinId', pinController.edit_put);
+
 router.get('/pins', pinController.list_get);
 router.get('/pins/saved', pinController.list_saved_get);
 
