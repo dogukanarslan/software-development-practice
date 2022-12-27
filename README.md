@@ -4,13 +4,13 @@ This is an application which you can save your resources.
 Preview link: http://18.191.213.23/
 
 ### Description
-Welcome, this is an Express application that you can use to save any resources around the web and save them for later usage. Also, you can interact with users by making pins public and commenting on other users' pins.
+Welcome, this is an Express application that you can use to save any resources around the web and save them for later usage. Also, you can interact with users by following and liking pins.
 
 ### Instructions
 - Clone repository
 - Install nodemon globally for easier development by `npm install -g nodemon`
 - Change directory to project path
-- Add MONGODB_URI to .env file
+- Copy .env.example file, rename it as .env, and set variables
 - Run `npm run dev` to transpile scss files and run server
 
 ## Technologies
@@ -19,6 +19,7 @@ Welcome, this is an Express application that you can use to save any resources a
 - Mongoose
 - EJS
 - Jest
+- AWS
 
 ### Screenshots
 ![sign-up-page](https://user-images.githubusercontent.com/52973879/208506057-64637b10-6366-4933-acc6-ff4935f12359.png)
