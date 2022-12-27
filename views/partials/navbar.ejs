@@ -3,11 +3,11 @@
     <a href="/" class="navbar-brand">Pinner</a>
     <div class="collapse navbar-collapse">
       <div class="ms-auto">
-        <% if (!user) { %>
+        <% if (!currentUser) { %>
         <a href="/login" class="btn btn-dark">Log in</a>
         <a href="/signup" class="btn btn-primary">Sign up</a>
         <% } else { %>
-        <span class="navbar-text"> Welcome, <%= user.email %> </span>
+        <span class="navbar-text"> Welcome, <%= currentUser.email %> </span>
         <a href="/logout" class="btn btn-primary">Log out</a>
         <% } %>
       </div>
