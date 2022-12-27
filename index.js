@@ -40,11 +40,13 @@ app.get('/', requireAuth, async (req, res) => {
   const searchData = req.query['search-data'];
   const type = req.query['type'] || 'all';
 
-  let pins = await Pin.find()
-    .where('title')
-    .where('description')
-    .regex(new RegExp(searchData, 'i'))
-    .sort({ created_at: -1 });
+  let pins = await Pin.find({
+    $or: [
+      { title: new RegExp(searchData, 'i') },
+      { description: new RegExp(searchData, 'i') },
+    ],
+  })
+  .sort({ created_at: -1 });
 
   if (type === 'following') {
     const user = await User.findOne({ _id: decodedToken.id });

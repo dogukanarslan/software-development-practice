@@ -2,15 +2,14 @@ const User = require('../models/User');
 const { decodeToken } = require('../utils');
 
 module.exports.list_get = async (req, res) => {
-  const token = req.cookies.authentication;
-
   const searchData = req.query['search-data'];
 
-  const users = await User.find()
-    .where('name')
-    .where('surname')
-    .regex(new RegExp(searchData, 'i'))
-    .sort({ created_at: -1 });
+  const users = await User.find({
+    $or: [
+      { name: new RegExp(searchData, 'i') },
+      { surname: new RegExp(searchData, 'i') },
+    ],
+  }).sort({ created_at: -1 });
 
   res.render('listUsers', {
     users,

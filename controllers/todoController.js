@@ -8,12 +8,14 @@ module.exports.list_get = async (req, res) => {
 
   const searchData = req.query['search-data'];
 
-  const todos = await Todo.find()
+  const todos = await Todo.find({
+    $or: [
+      { title: new RegExp(searchData, 'i') },
+      { description: new RegExp(searchData, 'i') },
+    ],
+  })
     .where('user_id')
     .equals(decodedToken.id)
-    .where('title')
-    .where('description')
-    .regex(new RegExp(searchData, 'i'))
     .sort({ created_at: -1 });
 
   res.render('listTodos', {

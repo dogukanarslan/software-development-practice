@@ -9,12 +9,14 @@ module.exports.list_get = async (req, res) => {
 
   const searchData = req.query['search-data'];
 
-  const pins = await Pin.find()
+  const pins = await Pin.find({
+    $or: [
+      { title: new RegExp(searchData, 'i') },
+      { description: new RegExp(searchData, 'i') },
+    ],
+  })
     .where('user_id')
     .equals(decodedToken.id)
-    .where('title')
-    .where('description')
-    .regex(new RegExp(searchData, 'i'))
     .sort({ created_at: -1 });
 
   res.render('listPins', {
@@ -29,12 +31,14 @@ module.exports.list_saved_get = async (req, res) => {
 
   const searchData = req.query['search-data'];
 
-  const pins = await Pin.find()
+  const pins = await Pin.find({
+    $or: [
+      { title: new RegExp(searchData, 'i') },
+      { description: new RegExp(searchData, 'i') },
+    ],
+  })
     .where('saved_by')
     .in(decodedToken.id)
-    .where('title')
-    .where('description')
-    .regex(new RegExp(searchData, 'i'))
     .sort({ created_at: -1 });
 
   res.render('listSavedPins', {
