@@ -49,18 +49,32 @@ module.exports.follow_user = async (req, res) => {
   const targetUser = await User.findOne({ _id: req.params.userId });
 
   if (currentUser.following.includes(req.params.userId)) {
-    currentUser.following = currentUser.following.filter(
-      (userId) => userId !== req.params.userId
-    );
-    targetUser.followed_by = targetUser.following.filter(
-      (userId) => userId !== req.params.id
-    );
+    currentUser
+      .updateOne({
+        following: currentUser.following.filter(
+          (userId) => userId !== req.params.userId
+        ),
+      })
+      .exec();
+    targetUser
+      .updateOne({
+        followed_by: targetUser.followed_by.filter(
+          (userId) => userId !== decodedToken.id
+        ),
+      })
+      .exec();
   } else {
-    currentUser.following.push(req.params.userId);
-    targetUser.followed_by.push(decodedToken.id);
+    currentUser
+      .updateOne({
+        following: [...currentUser.following, req.params.userId],
+      })
+      .exec();
+    targetUser
+      .updateOne({
+        followed_by: [...targetUser.followed_by, decodedToken.id],
+      })
+      .exec();
   }
 
-  currentUser.save();
-  targetUser.save();
   res.redirect(`/users/${targetUser.id}`);
 };

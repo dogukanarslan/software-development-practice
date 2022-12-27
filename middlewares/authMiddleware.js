@@ -6,7 +6,7 @@ const requireAuth = (req, res, next) => {
 
   // Check JWT existence
   if (token) {
-    jwt.verify(token, 'secret', (err, decodedToken) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.redirect('/login');
@@ -23,19 +23,19 @@ const checkUser = (req, res, next) => {
   const token = req.cookies.authentication;
 
   if (token) {
-    jwt.verify(token, 'secret', async (err, decodedToken) => {
+    jwt.verify(token, process.env.SECRET_KEY, async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
-        res.locals.user = null;
+        res.locals.currentUser = null;
         next();
       } else {
         const user = await User.findById(decodedToken.id);
-        res.locals.user = user;
+        res.locals.currentUser = user;
         next();
       }
     });
   } else {
-    res.locals.user = null;
+    res.locals.currentUser = null;
     next();
   }
 };

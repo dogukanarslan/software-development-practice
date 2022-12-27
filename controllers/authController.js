@@ -36,7 +36,7 @@ const handleErrors = (err) => {
 // 3 days expiration time
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, 'secret', { expiresIn: maxAge });
+  return jwt.sign({ id }, process.env.SECRET_KEY, { expiresIn: maxAge });
 };
 
 module.exports.signup_get = (req, res) => {
