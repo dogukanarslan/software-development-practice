@@ -12,6 +12,7 @@ Welcome, this is an Express application that you can use to save any resources a
 - Change directory to project path
 - Copy .env.example file, rename it as .env, and set variables
 - Run `npm run dev` to transpile scss files and run server
+- Run `docker-compose up` to run project as a Docker container
 
 ## Technologies
 - Express.js
@@ -19,6 +20,7 @@ Welcome, this is an Express application that you can use to save any resources a
 - Mongoose
 - EJS
 - Jest
+- Docker
 - AWS
 
 ### Screenshots
